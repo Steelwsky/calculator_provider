@@ -19,9 +19,9 @@ class MyHomePage extends StatelessWidget {
               children: <Widget>[
                 MyButton(str: '4', func: calcController.onNumber),
                 MyButton(str: '6', func: calcController.onNumber),
-                MyButton(str: '+', func: calcController.onOperator),
-                MyButton(str: '=', func: calcController.onOperator),
-                MyButton(str: 'C', func: calcController.clear),
+//                MyButton(str: '+', func: calcController.onOperator),
+//                MyButton(str: '=', func: calcController.onOperator),
+//                MyButton(str: 'C', func: calcController.clear),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
