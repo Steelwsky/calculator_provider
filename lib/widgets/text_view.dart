@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider_calc_expanded/calc_controller.dart';
 import 'package:provider/provider.dart';
 
-// child: Text(isActive ? 'STOP' : 'START'),
-
 class TextView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -13,7 +11,8 @@ class TextView extends StatelessWidget {
         builder: (context, newState, child) {
           return Container(
             child: Text(
-              newState.isFirst ? '${newState.num1}': '${newState.num2}',
+//              newState.isFirst ? '${newState.num1}': '${newState.num2}',
+            newState.operator == null ? '${newState.num1}' : newState.operator != '' ? '${newState.num2}' : '',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 60.0,

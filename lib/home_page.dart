@@ -7,7 +7,7 @@ import 'widgets/text_view.dart';
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final CalcController calcController = Provider.of<CalcController>(context);
+    final calcController = Provider.of<CalcController>(context);
     return Scaffold(
       backgroundColor: Colors.white12,
       body: Center(
