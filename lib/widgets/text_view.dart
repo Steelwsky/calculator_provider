@@ -13,7 +13,7 @@ class TextView extends StatelessWidget {
           return Container(
             child: Text(
 //              newState.isFirst ? '${newState.num1}': '${newState.num2}',
-            newState.operator == null ? '${newState.num1}' : newState.operator == '+' ? '${newState.num2}' : '${newState.num1}',
+              '${newState.result}',
               key: ValueKey('textview'),
               textAlign: TextAlign.center,
               style: TextStyle(

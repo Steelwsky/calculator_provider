@@ -11,10 +11,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider_calc_expanded/main.dart';
 
 void main() {
-//  testWidgets('find buttons and textview', (WidgetTester tester) async {
-//    await tester.pumpWidget(MyApp());
-//    await tester.pump();
-//  });
 
   testWidgets('buttons updating textview', (WidgetTester tester) async {
     // Build our app and trigger a frame.
@@ -41,20 +37,88 @@ void main() {
     print ('my print: ${txtview2.data}');
     expect (txtview2.data, equals('44'));
 
+  });
 
-//    print(textFinder.evaluate().first)
+  testWidgets('check result for 4+6=10.0', (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp());
+    await tester.pump();
 
+    final textFinder = find.byKey(ValueKey('textview'));
+    final btnFinder = find.byKey(ValueKey('btn4'));
+    final btnFinder2 = find.byKey(ValueKey('btn6'));
+    final plusFinder = find.byKey(ValueKey('btn+'));
+    final equalFinder = find.byKey(ValueKey('btn='));
 
+    expect(textFinder, findsOneWidget);
+    expect(btnFinder, findsOneWidget);
+    expect(btnFinder2, findsOneWidget);
+    expect(plusFinder, findsOneWidget);
+    expect(equalFinder, findsOneWidget);
 
-//    expect(find.text('0'), findsOneWidget);
-//    expect(find.text('1'), findsNothing);
+    await tester.tap(btnFinder);
+    await tester.pump();
+    await tester.tap(plusFinder);
+    await tester.tap(btnFinder2);
+    await tester.pump();
+    await tester.tap(equalFinder);
+    await tester.pump();
+    final txtview = textFinder
+        .evaluate()
+        .single
+        .widget as Text;
+    print('my print: ${txtview.data}');
+    expect(txtview.data, equals('10.0'));
+  });
 
-    // Tap the '+' icon and trigger a frame.
-//    await tester.tap(find.byIcon(Icons.add));
-//    await tester.pump();
+  testWidgets('check result for 4+6=+6=16.0', (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp());
+    await tester.pump();
 
-    // Verify that our counter has incremented.
-//    expect(find.text('0'), findsNothing);
-//    expect(find.text('1'), findsOneWidget);
+    final textFinder = find.byKey(ValueKey('textview'));
+    final btnFinder = find.byKey(ValueKey('btn4'));
+    final btnFinder2 = find.byKey(ValueKey('btn6'));
+    final plusFinder = find.byKey(ValueKey('btn+'));
+    final equalFinder = find.byKey(ValueKey('btn='));
+
+    await tester.tap(btnFinder);
+    await tester.pump();
+    await tester.tap(plusFinder);
+    await tester.tap(btnFinder2);
+    await tester.pump();
+    await tester.tap(equalFinder);
+    await tester.pump();
+    await tester.tap(plusFinder);
+    await tester.tap(btnFinder2);
+    await tester.pump();
+    await tester.tap(equalFinder);
+    await tester.pump();
+    final txtview = textFinder
+        .evaluate()
+        .single
+        .widget as Text;
+    print('my print: ${txtview.data}');
+    expect(txtview.data, equals('16.0'));
+  });
+
+  testWidgets('check clear(), must be 0', (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp());
+    await tester.pump();
+
+    final textFinder = find.byKey(ValueKey('textview'));
+    final btnFinder = find.byKey(ValueKey('btn4'));
+    final clearFinder = find.byKey(ValueKey('btnC'));
+
+    await tester.tap(btnFinder);
+    await tester.pump();
+    await tester.tap(btnFinder);
+    await tester.pump();
+    await tester.tap(clearFinder);
+    await tester.pump();
+    final txtview = textFinder
+        .evaluate()
+        .single
+        .widget as Text;
+    print('my print: ${txtview.data}');
+    expect(txtview.data, equals('0'));
   });
 }

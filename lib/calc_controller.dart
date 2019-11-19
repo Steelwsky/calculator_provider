@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 enum Operator { plus, equal }
 
 class CalcState {
-  CalcState({this.num1 = '0', this.num2 = '', this.operator});
+  CalcState(
+      {this.num1 = '0', this.num2 = '', this.result = '0', this.operator});
 
   final String num1;
   final String num2;
+  final String result;
   final String operator;
 }
 
@@ -16,34 +18,40 @@ class CalcController {
   void onNumber(String input) {
 //    printInfo();
     if (state.value.operator == null) {
-      state.value =
-          CalcState(num1: state.value.num1.replaceAll('0', '') + input);
+      state.value = CalcState(
+          num1: state.value.num1.replaceAll('0', '') + input,
+          result: state.value.num1.replaceAll('0', '') + input);
 //      printInfo();
     } else {
       state.value = CalcState(
-          num1: state.value.num1,
-          num2: state.value.num2 + input,
-          operator: state.value.operator);
+        num1: state.value.num1,
+        num2: state.value.num2 + input,
+        result: state.value.num2 + input,
+        operator: state.value.operator,
+      );
     }
   }
 
-//  void clear(String clear) {
-//    state.value = CalcState();
-//    printInfo();
-//  }
+  void clear(String clear) {
+    state.value = CalcState();
+    printInfo();
+  }
 
   void onOperator(String operation) {
     switch (operation) {
       case '+':
         {
-          state.value = CalcState(num1: state.value.num1, operator: operation);
+          state.value = CalcState(
+              num1: state.value.num1,
+              result: state.value.num1,
+              operator: operation);
           printInfo();
         }
         break;
       case '=':
         {
           if (state.value.operator != null) {
-//            math();
+            math();
             printInfo();
           } else
             return;
@@ -52,15 +60,23 @@ class CalcController {
     }
   }
 
-//  void math() {
-//    if (state.value.operator == '+') {
-//      state.value = CalcState(
-//          num1: (double.parse(state.value.num1) + double.parse(state.value.num2)).toString());
-//      return;
-//    }
-//  }
-//
+  void math() {
+    if (state.value.operator == '+') {
+      state.value = CalcState(
+          num1:
+          (double.parse(state.value.num1) + double.parse(state.value.num2))
+              .toString(),
+          result:
+          (double.parse(state.value.num1) + double.parse(state.value.num2))
+              .toString());
+      return;
+    }
+  }
+
   void printInfo() {
-    print('state: num1: ${state.value.num1}, num2: ${state.value.num2}, operator: ${state.value.operator}');
+    print(
+        'state: num1: ${state.value.num1}, num2: ${state.value
+            .num2}, result: ${state.value.result}, operator: ${state.value
+            .operator}');
   }
 }
