@@ -32,25 +32,25 @@ class CalcController {
 //    printInfo();
 //  }
 
-//  void onOperator(String operation) {
-//    switch (operation) {
-//      case '+':
-//        {
-//          state.value = CalcState(num1: state.value.num1, operator: operation);
-//          printInfo();
-//        }
-//        break;
-//      case '=':
-//        {
-//          if (state.value.operator != null) {
+  void onOperator(String operation) {
+    switch (operation) {
+      case '+':
+        {
+          state.value = CalcState(num1: state.value.num1, operator: operation);
+          printInfo();
+        }
+        break;
+      case '=':
+        {
+          if (state.value.operator != null) {
 //            math();
-//            printInfo();
-//          } else
-//            return;
-//        }
-//        break;
-//    }
-//  }
+            printInfo();
+          } else
+            return;
+        }
+        break;
+    }
+  }
 
 //  void math() {
 //    if (state.value.operator == '+') {
@@ -60,7 +60,7 @@ class CalcController {
 //    }
 //  }
 //
-//  void printInfo() {
-//    print('state: num1: ${state.value.num1}, num2: ${state.value.num2}, operator: ${state.value.operator}');
-//  }
+  void printInfo() {
+    print('state: num1: ${state.value.num1}, num2: ${state.value.num2}, operator: ${state.value.operator}');
+  }
 }

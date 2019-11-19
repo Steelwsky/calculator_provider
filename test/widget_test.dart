@@ -11,18 +11,41 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider_calc_expanded/main.dart';
 
 void main() {
-  testWidgets('smoot init', (WidgetTester tester) async {
+//  testWidgets('find buttons and textview', (WidgetTester tester) async {
+//    await tester.pumpWidget(MyApp());
+//    await tester.pump();
+//  });
+
+  testWidgets('buttons updating textview', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());
+    await tester.pump();
 
     final textFinder = find.byKey(ValueKey('textview'));
     final btnFinder = find.byKey(ValueKey('btn4'));
     final btnFinder2 = find.byKey(ValueKey('btn6'));
+    final oprFinder = find.byKey(ValueKey('btn+'));
 
     expect(textFinder, findsOneWidget);
+    expect(btnFinder, findsOneWidget);
+    expect(btnFinder2, findsOneWidget);
+    expect(oprFinder, findsOneWidget);
+    final txtview0 = textFinder.evaluate().single.widget as Text;
+    expect(txtview0.data, equals('0'));
+    print ('my print: ${txtview0.data}');
     await tester.tap(btnFinder);
     await tester.pump();
-    expect (textFinder, findsOneWidget);
+    await tester.tap(btnFinder);
+    await tester.pump();
+    final txtview2 = textFinder.evaluate().single.widget as Text;
+    print ('my print: ${txtview2.data}');
+    expect (txtview2.data, equals('44'));
+
+
+//    print(textFinder.evaluate().first)
+
+
+
 //    expect(find.text('0'), findsOneWidget);
 //    expect(find.text('1'), findsNothing);
 
