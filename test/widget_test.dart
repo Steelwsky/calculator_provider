@@ -27,16 +27,21 @@ void main() {
     expect(btnFinder2, findsOneWidget);
     expect(oprFinder, findsOneWidget);
     final txtview0 = textFinder.evaluate().single.widget as Text;
+    print('my print: ${txtview0.data}');
     expect(txtview0.data, equals('0'));
-    print ('my print: ${txtview0.data}');
     await tester.tap(btnFinder);
     await tester.pump();
+    final txtview1 = textFinder
+        .evaluate()
+        .single
+        .widget as Text;
+    print('my print: ${txtview1.data}');
+    expect(txtview1.data, equals('4'));
     await tester.tap(btnFinder);
     await tester.pump();
     final txtview2 = textFinder.evaluate().single.widget as Text;
     print ('my print: ${txtview2.data}');
     expect (txtview2.data, equals('44'));
-
   });
 
   testWidgets('check result for 4+6=10.0', (WidgetTester tester) async {
