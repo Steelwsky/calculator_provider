@@ -22,8 +22,8 @@ class TextView extends StatelessWidget {
               ),
               maxLines: 1,
             ),
-            alignment: Alignment.center,
-            padding: EdgeInsets.only(top: 134, right: 16, bottom: 16),
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.only(top: 134, right: 68, bottom: 16),
           );
         });
   }
