@@ -11,15 +11,35 @@ import 'package:provider_calc_expanded/main.dart';
 
 void main() {
   testWidgets('should show 0 on app start', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
-    await tester.pump();
-
-    expect(currentText, '0');
+    await givenAppIsPumped(tester);
+    thenResultShouldBe('0');
   });
+
+  testWidgets('should show 1 after user press 1', (WidgetTester tester) async {
+    await givenAppIsPumped(tester);
+    thenResultShouldBe('0');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('1');
+  });
+}
+
+Future<void> whenUserPressesButton(Finder toPress, WidgetTester tester) async {
+  await tester.tap(toPress);
+  await tester.pump();
 }
 
 Finder get textViewResultFinder => find.byKey(ValueKey('textViewResult'));
 
-String get currentText =>
+Finder get button1 => find.byKey(ValueKey('button1'));
+
+String get currentResultText =>
     (textViewResultFinder.evaluate().single.widget as Text).data;
+
+void thenResultShouldBe(String text) {
+  expect(currentResultText, text);
+}
+
+Future<void> givenAppIsPumped(WidgetTester tester) async {
+  await tester.pumpWidget(MyApp());
+  await tester.pump();
+}

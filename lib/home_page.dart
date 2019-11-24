@@ -15,7 +15,12 @@ class MyHomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           TextView(),
-          FlatButton(onPressed: () {}, child: Text('1')),
+          FlatButton(
+              onPressed: () {
+                calcController.onNumberPressed(1);
+              },
+              child: Text('1'),
+              key: ValueKey('button1')),
           FlatButton(onPressed: () {}, child: Text('=')),
           FlatButton(onPressed: () {}, child: Text('+')),
           FlatButton(onPressed: () {}, child: Text('CLEAR')),

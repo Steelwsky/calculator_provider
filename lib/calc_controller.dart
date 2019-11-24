@@ -10,4 +10,8 @@ class CalcState {
 
 class CalcController {
   final ValueNotifier<CalcState> state = ValueNotifier(CalcState());
+
+  void onNumberPressed(int buttonValue) {
+    state.value = CalcState(currentResult: buttonValue.toString());
+  }
 }
