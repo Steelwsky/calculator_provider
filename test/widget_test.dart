@@ -31,6 +31,10 @@ void main() {
     await whenUserPressesButton(button1, tester);
     thenResultShouldBe('11');
   });
+
+  testWidgets(
+      'should show + after user press +', (WidgetTester tester) async {},
+      skip: true);
 }
 
 Future<void> whenUserPressesButton(Finder toPress, WidgetTester tester) async {
