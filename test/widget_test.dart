@@ -21,6 +21,16 @@ void main() {
     await whenUserPressesButton(button1, tester);
     thenResultShouldBe('1');
   });
+
+  testWidgets('should show 11 after user press 1 then 1 again',
+      (WidgetTester tester) async {
+    await givenAppIsPumped(tester);
+    thenResultShouldBe('0');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('1');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('11');
+  });
 }
 
 Future<void> whenUserPressesButton(Finder toPress, WidgetTester tester) async {
