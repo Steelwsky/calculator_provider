@@ -84,10 +84,31 @@ void main() {
     thenResultShouldBe('1');
     await whenUserPressesButton(plusButton, tester);
     thenResultShouldBe('1+');
-    await whenUserPressesButton(plusButton, tester);
+    await whenUserPressesButton(button1, tester);
     thenResultShouldBe('1+1');
     await whenUserPressesButton(equalButton, tester);
     thenResultShouldBe('2');
+  });
+
+  testWidgets(
+      'should show 3 after user tapped 1, +, 1, =, +, 1 and = after that', (
+      WidgetTester tester) async {
+    await givenAppIsPumped(tester);
+    thenResultShouldBe('0');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('1');
+    await whenUserPressesButton(plusButton, tester);
+    thenResultShouldBe('1+');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('1+1');
+    await whenUserPressesButton(equalButton, tester);
+    thenResultShouldBe('2');
+    await whenUserPressesButton(plusButton, tester);
+    thenResultShouldBe('2+');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('2+1');
+    await whenUserPressesButton(equalButton, tester);
+    thenResultShouldBe('3');
   });
 
   testWidgets('should show 0 after user tapped + and = after app is pumped', (WidgetTester tester) async {

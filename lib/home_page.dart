@@ -21,13 +21,22 @@ class MyHomePage extends StatelessWidget {
               },
               child: Text('1'),
               key: ValueKey('button1')),
-          FlatButton(onPressed: () {
-            calcController.onEqualPressed;
-          }, child: Text('='), key: ValueKey('equalButton')),
-          FlatButton(onPressed: () {
-            calcController.onOperationPressed('+');
-          }, child: Text('+'), key: ValueKey('plusButton')),
-          FlatButton(onPressed: () {}, child: Text('CLEAR'), key: ValueKey('clearButton')),
+          FlatButton(
+              onPressed: () {
+                calcController.onEqualPressed('=');
+              },
+              child: Text('='),
+              key: ValueKey('equalButton')),
+          FlatButton(
+              onPressed: () {
+                calcController.onOperationPressed('+');
+              },
+              child: Text('+'),
+              key: ValueKey('plusButton')),
+          FlatButton(
+              onPressed: () {},
+              child: Text('CLEAR'),
+              key: ValueKey('clearButton')),
         ],
       )),
     ); // This trailing comma makes auto-formatting nicer for build methods.

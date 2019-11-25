@@ -33,13 +33,17 @@ class CalcController {
     }
   }
 
-  void onEqualPressed() {
+  void onEqualPressed(string) {
     final currentResult = state.value.currentResult;
+    print('currentResult: $currentResult');
     if (currentResult.contains('+')) {
-        List splitResult = currentResult.split('+');
-        print('splitResult: ${splitResult[0]}, ${splitResult[1]}, ${splitResult[2]}, ${splitResult[3]}');
-        final newState  = CalcState(currentResult: (double.parse(splitResult[0]) + double.parse(splitResult[2])).toString());
-        state.value = newState;
+      List splitResult = currentResult.split('+');
+      print('splitResult: ${splitResult[0]}, ${splitResult[1]}');
+      final newState = CalcState(
+          currentResult: (int.parse(splitResult[0]) +
+              (splitResult[1] == '' ? 0 : int.parse(splitResult[1])))
+              .toString());
+      state.value = newState;
     }
   }
 }
