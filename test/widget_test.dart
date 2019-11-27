@@ -5,125 +5,156 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:provider_calc_expanded/main.dart';
 
 void main() {
-
-  testWidgets('buttons updating textview', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
-    await tester.pump();
-
-    final textFinder = find.byKey(ValueKey('textview'));
-    final btnFinder = find.byKey(ValueKey('btn4'));
-    final btnFinder2 = find.byKey(ValueKey('btn6'));
-    final oprFinder = find.byKey(ValueKey('btn+'));
-
-    expect(textFinder, findsOneWidget);
-    expect(btnFinder, findsOneWidget);
-    expect(btnFinder2, findsOneWidget);
-    expect(oprFinder, findsOneWidget);
-    final txtview0 = textFinder.evaluate().single.widget as Text;
-    print('my print: ${txtview0.data}');
-    expect(txtview0.data, equals('0'));
-    await tester.tap(btnFinder);
-    await tester.pump();
-    final txtview1 = textFinder
-        .evaluate()
-        .single
-        .widget as Text;
-    print('my print: ${txtview1.data}');
-    expect(txtview1.data, equals('4'));
-    await tester.tap(btnFinder);
-    await tester.pump();
-    final txtview2 = textFinder.evaluate().single.widget as Text;
-    print ('my print: ${txtview2.data}');
-    expect (txtview2.data, equals('44'));
+  testWidgets('should show 0 on app start', (WidgetTester tester) async {
+    await givenAppIsPumped(tester);
+    thenResultShouldBe('0');
   });
 
-  testWidgets('check result for 4+6=10.0', (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp());
-    await tester.pump();
-
-    final textFinder = find.byKey(ValueKey('textview'));
-    final btnFinder = find.byKey(ValueKey('btn4'));
-    final btnFinder2 = find.byKey(ValueKey('btn6'));
-    final plusFinder = find.byKey(ValueKey('btn+'));
-    final equalFinder = find.byKey(ValueKey('btn='));
-
-    expect(textFinder, findsOneWidget);
-    expect(btnFinder, findsOneWidget);
-    expect(btnFinder2, findsOneWidget);
-    expect(plusFinder, findsOneWidget);
-    expect(equalFinder, findsOneWidget);
-
-    await tester.tap(btnFinder);
-    await tester.pump();
-    await tester.tap(plusFinder);
-    await tester.tap(btnFinder2);
-    await tester.pump();
-    await tester.tap(equalFinder);
-    await tester.pump();
-    final txtview = textFinder
-        .evaluate()
-        .single
-        .widget as Text;
-    print('my print: ${txtview.data}');
-    expect(txtview.data, equals('10.0'));
+  testWidgets('should show 1 after user press 1', (WidgetTester tester) async {
+    await givenAppIsPumped(tester);
+    thenResultShouldBe('0');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('1');
   });
 
-  testWidgets('check result for 4+6=+6=16.0', (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp());
-    await tester.pump();
-
-    final textFinder = find.byKey(ValueKey('textview'));
-    final btnFinder = find.byKey(ValueKey('btn4'));
-    final btnFinder2 = find.byKey(ValueKey('btn6'));
-    final plusFinder = find.byKey(ValueKey('btn+'));
-    final equalFinder = find.byKey(ValueKey('btn='));
-
-    await tester.tap(btnFinder);
-    await tester.pump();
-    await tester.tap(plusFinder);
-    await tester.tap(btnFinder2);
-    await tester.pump();
-    await tester.tap(equalFinder);
-    await tester.pump();
-    await tester.tap(plusFinder);
-    await tester.tap(btnFinder2);
-    await tester.pump();
-    await tester.tap(equalFinder);
-    await tester.pump();
-    final txtview = textFinder
-        .evaluate()
-        .single
-        .widget as Text;
-    print('my print: ${txtview.data}');
-    expect(txtview.data, equals('16.0'));
+  testWidgets('should show 11 after user press 1 then 1 again',
+      (WidgetTester tester) async {
+    await givenAppIsPumped(tester);
+    thenResultShouldBe('0');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('1');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('11');
   });
 
-  testWidgets('check clear(), must be 0', (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp());
-    await tester.pump();
-
-    final textFinder = find.byKey(ValueKey('textview'));
-    final btnFinder = find.byKey(ValueKey('btn4'));
-    final clearFinder = find.byKey(ValueKey('btnC'));
-
-    await tester.tap(btnFinder);
-    await tester.pump();
-    await tester.tap(btnFinder);
-    await tester.pump();
-    await tester.tap(clearFinder);
-    await tester.pump();
-    final txtview = textFinder
-        .evaluate()
-        .single
-        .widget as Text;
-    print('my print: ${txtview.data}');
-    expect(txtview.data, equals('0'));
+  testWidgets('should show + after user press +', (WidgetTester tester) async {
+    await givenAppIsPumped(tester);
+    thenResultShouldBe('0');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('1');
+    await whenUserPressesButton(plusButton, tester);
+    thenResultShouldBe('1+');
   });
+
+  testWidgets('should show only one + after user press + again', (WidgetTester tester) async {
+    await givenAppIsPumped(tester);
+    thenResultShouldBe('0');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('1');
+    await whenUserPressesButton(plusButton, tester);
+    thenResultShouldBe('1+');
+    await whenUserPressesButton(plusButton, tester);
+    thenResultShouldBe('1+');
+  });
+
+  testWidgets('should show 1+1', (WidgetTester tester) async {
+    await givenAppIsPumped(tester);
+    thenResultShouldBe('0');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('1');
+    await whenUserPressesButton(plusButton, tester);
+    thenResultShouldBe('1+');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('1+1');
+  });
+
+  testWidgets('should show 0+ after user tapped @+button@ after app is pumped', (WidgetTester tester) async {
+    await givenAppIsPumped(tester);
+    thenResultShouldBe('0');
+    await whenUserPressesButton(plusButton, tester);
+    thenResultShouldBe('0+');
+  });
+
+  testWidgets('should show 0+ after user tapped @+button@ after app is pumped', (WidgetTester tester) async {
+    await givenAppIsPumped(tester);
+    thenResultShouldBe('0');
+    await whenUserPressesButton(plusButton, tester);
+    thenResultShouldBe('0+');
+  });
+
+  testWidgets('should show 2 after user tapped 1, +, 1 and = after all', (WidgetTester tester) async {
+    await givenAppIsPumped(tester);
+    thenResultShouldBe('0');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('1');
+    await whenUserPressesButton(plusButton, tester);
+    thenResultShouldBe('1+');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('1+1');
+    await whenUserPressesButton(equalButton, tester);
+    thenResultShouldBe('2');
+  });
+
+  testWidgets(
+      'should show 3 after user tapped 1, +, 1, =, +, 1 and = after that', (
+      WidgetTester tester) async {
+    await givenAppIsPumped(tester);
+    thenResultShouldBe('0');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('1');
+    await whenUserPressesButton(plusButton, tester);
+    thenResultShouldBe('1+');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('1+1');
+    await whenUserPressesButton(equalButton, tester);
+    thenResultShouldBe('2');
+    await whenUserPressesButton(plusButton, tester);
+    thenResultShouldBe('2+');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('2+1');
+    await whenUserPressesButton(equalButton, tester);
+    thenResultShouldBe('3');
+  });
+
+  testWidgets('should show 0 after user tapped + and = after app is pumped', (WidgetTester tester) async {
+    await givenAppIsPumped(tester);
+    thenResultShouldBe('0');
+    await whenUserPressesButton(plusButton, tester);
+    thenResultShouldBe('0+');
+    await whenUserPressesButton(equalButton, tester);
+    thenResultShouldBe('0');
+  });
+
+  testWidgets('should show 1 after user tapped +, 1 and = after app is pumped', (WidgetTester tester) async {
+    await givenAppIsPumped(tester);
+    thenResultShouldBe('0');
+    await whenUserPressesButton(plusButton, tester);
+    thenResultShouldBe('0+');
+    await whenUserPressesButton(button1, tester);
+    thenResultShouldBe('0+1');
+    await whenUserPressesButton(equalButton, tester);
+    thenResultShouldBe('1');
+  });
+
 }
+
+
+Future<void> givenAppIsPumped(WidgetTester tester) async {
+  await tester.pumpWidget(MyApp());
+  await tester.pump();
+}
+
+Future<void> whenUserPressesButton(Finder toPress, WidgetTester tester) async {
+  await tester.tap(toPress);
+  await tester.pump();
+}
+
+void thenResultShouldBe(String text) {
+  expect(currentResultText, text);
+}
+
+Finder get textViewResultFinder => find.byKey(ValueKey('textViewResult'));
+
+Finder get button1 => find.byKey(ValueKey('button1'));
+
+Finder get plusButton => find.byKey(ValueKey('plusButton'));
+
+Finder get equalButton => find.byKey(ValueKey('equalButton'));
+
+String get currentResultText =>
+    (textViewResultFinder.evaluate().single.widget as Text).data;
