@@ -14,14 +14,14 @@ class MyButton extends StatelessWidget {
     if (str == '0') {
       isZero = true;
     }
-    print('str : $str, isZero: $isZero');
+//    print('str : $str, isZero: $isZero');
     return Container(
         margin: const EdgeInsets.all(4.0),
         child: RawMaterialButton(
           constraints: isZero == true
               ? BoxConstraints.tight(Size(152.0, 72.0))
               : BoxConstraints.tight(Size(72.0, 72.0)),
-          key: ValueKey('btn$str'),
+          key: ValueKey('button$str'),
           onPressed: () {
             func(str);
           },

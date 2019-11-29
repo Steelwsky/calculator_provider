@@ -14,7 +14,7 @@ class TextView extends StatelessWidget {
             child: Text(
 //              newState.isFirst ? '${newState.num1}': '${newState.num2}',
               '${newState.result}',
-              key: ValueKey('textview'),
+              key: ValueKey('textViewResult'),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 60.0,

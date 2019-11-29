@@ -1,129 +1,177 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:provider_calc_expanded/main.dart';
 
 void main() {
-
-  testWidgets('buttons updating textview', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
-    await tester.pump();
-
-    final textFinder = find.byKey(ValueKey('textview'));
-    final btnFinder = find.byKey(ValueKey('btn4'));
-    final btnFinder2 = find.byKey(ValueKey('btn6'));
-    final oprFinder = find.byKey(ValueKey('btn+'));
-
-    expect(textFinder, findsOneWidget);
-    expect(btnFinder, findsOneWidget);
-    expect(btnFinder2, findsOneWidget);
-    expect(oprFinder, findsOneWidget);
-    final txtview0 = textFinder.evaluate().single.widget as Text;
-    print('my print: ${txtview0.data}');
-    expect(txtview0.data, equals('0'));
-    await tester.tap(btnFinder);
-    await tester.pump();
-    final txtview1 = textFinder
-        .evaluate()
-        .single
-        .widget as Text;
-    print('my print: ${txtview1.data}');
-    expect(txtview1.data, equals('4'));
-    await tester.tap(btnFinder);
-    await tester.pump();
-    final txtview2 = textFinder.evaluate().single.widget as Text;
-    print ('my print: ${txtview2.data}');
-    expect (txtview2.data, equals('44'));
+  testWidgets('pumped app shows 0 at the start', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
   });
 
-  testWidgets('check result for 4+6=10.0', (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp());
-    await tester.pump();
+  testWidgets('should be 4 after user press 4 after app is pumped',
+          (WidgetTester tester) async {
+        await pumpGivenApp(tester);
+        thenResultShouldBe('0');
+        await whenUserPressButton(buttonFour, tester);
+        thenResultShouldBe('4');
+      });
 
-    final textFinder = find.byKey(ValueKey('textview'));
-    final btnFinder = find.byKey(ValueKey('btn4'));
-    final btnFinder2 = find.byKey(ValueKey('btn6'));
-    final plusFinder = find.byKey(ValueKey('btn+'));
-    final equalFinder = find.byKey(ValueKey('btn='));
-
-    expect(textFinder, findsOneWidget);
-    expect(btnFinder, findsOneWidget);
-    expect(btnFinder2, findsOneWidget);
-    expect(plusFinder, findsOneWidget);
-    expect(equalFinder, findsOneWidget);
-
-    await tester.tap(btnFinder);
-    await tester.pump();
-    await tester.tap(plusFinder);
-    await tester.tap(btnFinder2);
-    await tester.pump();
-    await tester.tap(equalFinder);
-    await tester.pump();
-    final txtview = textFinder
-        .evaluate()
-        .single
-        .widget as Text;
-    print('my print: ${txtview.data}');
-    expect(txtview.data, equals('10.0'));
+  testWidgets('should be 44 after 2 taps on 4 button',
+          (WidgetTester tester) async {
+        await pumpGivenApp(tester);
+        thenResultShouldBe('0');
+        await whenUserPressButton(buttonFour, tester);
+        thenResultShouldBe('4');
+        await whenUserPressButton(buttonFour, tester);
+        thenResultShouldBe('44');
   });
 
-  testWidgets('check result for 4+6=+6=16.0', (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp());
-    await tester.pump();
-
-    final textFinder = find.byKey(ValueKey('textview'));
-    final btnFinder = find.byKey(ValueKey('btn4'));
-    final btnFinder2 = find.byKey(ValueKey('btn6'));
-    final plusFinder = find.byKey(ValueKey('btn+'));
-    final equalFinder = find.byKey(ValueKey('btn='));
-
-    await tester.tap(btnFinder);
-    await tester.pump();
-    await tester.tap(plusFinder);
-    await tester.tap(btnFinder2);
-    await tester.pump();
-    await tester.tap(equalFinder);
-    await tester.pump();
-    await tester.tap(plusFinder);
-    await tester.tap(btnFinder2);
-    await tester.pump();
-    await tester.tap(equalFinder);
-    await tester.pump();
-    final txtview = textFinder
-        .evaluate()
-        .single
-        .widget as Text;
-    print('my print: ${txtview.data}');
-    expect(txtview.data, equals('16.0'));
+  testWidgets('plus sign does not show after user press plusButton', (
+      WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('0');
   });
 
-  testWidgets('check clear(), must be 0', (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp());
-    await tester.pump();
-
-    final textFinder = find.byKey(ValueKey('textview'));
-    final btnFinder = find.byKey(ValueKey('btn4'));
-    final clearFinder = find.byKey(ValueKey('btnC'));
-
-    await tester.tap(btnFinder);
-    await tester.pump();
-    await tester.tap(btnFinder);
-    await tester.pump();
-    await tester.tap(clearFinder);
-    await tester.pump();
-    final txtview = textFinder
-        .evaluate()
-        .single
-        .widget as Text;
-    print('my print: ${txtview.data}');
-    expect(txtview.data, equals('0'));
+  testWidgets(
+      '+ sign moves currentResultView from num1 to num2 and textview shows num2: 7', (
+      WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('7');
   });
+
+  testWidgets('should show 0.0 after press: +, =', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('0.0');
+  });
+
+  testWidgets(
+      'expected to get 7.0 after: 0 + 7 =', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('7');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('7.0');
+  });
+
+
+  testWidgets('result should be 11.0 after user press: 4, +, 7, =.', (
+      WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('7');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('11.0');
+  });
+
+  testWidgets('result should be -3.0 after user press: 4, +, -, 7, = ', (
+      WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonMinus, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('7');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('-3.0');
+  });
+
+  testWidgets('result should be 7 after user press + after first math result', (
+      WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('7');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('11.0');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('11.0');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('7');
+  });
+
+  testWidgets(
+      'result should be 18.0 after user press +, 7 and = after first math result', (
+      WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('7');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('11.0');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('11.0');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('7');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('18.0');
+  });
+
+  testWidgets(
+      'check clear(), must be 0', (WidgetTester tester) async {}, skip: true);
 }
+
+Future<void> pumpGivenApp(WidgetTester tester) async {
+  await tester.pumpWidget(MyApp());
+  await tester.pump();
+}
+
+Future<void> whenUserPressButton(Finder toPress, WidgetTester tester) async {
+  await tester.tap(toPress);
+  await tester.pump();
+}
+
+void thenResultShouldBe(String text) {
+  expect(currentResult, text);
+}
+
+Finder get textViewResultFinder => find.byKey(ValueKey('textViewResult'));
+
+Finder get buttonFour => find.byKey(ValueKey('button4'));
+
+Finder get buttonSeven => find.byKey(ValueKey('button7'));
+
+Finder get buttonPlus => find.byKey(ValueKey('button+'));
+
+Finder get buttonEqual => find.byKey(ValueKey('button='));
+
+Finder get buttonMinus => find.byKey(ValueKey('button-'));
+//Finder get buttonMulti => find.byKey(ValueKey('button*'));
+//Finder get buttonDivide => find.byKey(ValueKey('button/'));
+
+String get currentResult =>
+    (textViewResultFinder
+        .evaluate()
+        .single
+        .widget as Text).data;

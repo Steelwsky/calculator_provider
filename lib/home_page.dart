@@ -14,7 +14,9 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextView(),
+            Flexible(
+              child: TextView(),
+            ),
             Row(
               children: <Widget>[
                 MyButton(str: 'AC', func: calcController.clear),

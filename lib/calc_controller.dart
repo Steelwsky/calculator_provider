@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-enum Operator { plus, equal }
-
 class CalcState {
   CalcState(
       {this.num1 = '0', this.num2 = '', this.result = '0', this.operator});
@@ -16,83 +14,74 @@ class CalcController {
   final ValueNotifier<CalcState> state = ValueNotifier(CalcState());
 
   void onNumber(String input) {
-//    printInfo();
     if (state.value.operator == null) {
-      state.value = CalcState(
-          num1: state.value.num1.replaceAll('0', '') + input,
-          result: state.value.num1.replaceAll('0', '') + input);
-      printInfo();
+      if (state.value.num1 == '0') {
+        final newState = CalcState(num1: input, result: input);
+        state.value = newState;
+        printInfo();
+      } else {
+        final newState = CalcState(
+            num1: state.value.num1 + input, result: state.value.num1 + input);
+        state.value = newState;
+        printInfo();
+      }
     } else {
-      state.value = CalcState(
-          num1: state.value.num1,
-          num2: state.value.num2 + input,
-          result: state.value.num2 + input,
-          operator: state.value.operator);
+      final newState = CalcState(
+        num1: state.value.num1,
+        num2: state.value.num2 + input,
+        operator: state.value.operator,
+        result: state.value.num2 + input,
+      );
+      state.value = newState;
       printInfo();
     }
   }
 
   void onOperator(String operation) {
     switch (operation) {
-      case '%':
+      case '+':
         {
-          onPercentage();
+          state.value = CalcState(
+            num1: state.value.num1,
+            num2: state.value.num2,
+            operator: operation,
+            result: state.value.result,
+          );
         }
         break;
-      case '+-':
+      case '-':
         {
-          onPlusMinus();
-        }
-        break;
-      case ',':
-        {
-          onDecimal();
+          state.value = CalcState(
+            num1: state.value.num1,
+            num2: state.value.num2,
+            operator: operation,
+            result: state.value.result,
+          );
         }
         break;
       case '=':
         {
-          if (state.value.operator != null) {
-            math();
-            printInfo();
-          } else
-            return;
+          math();
+          printInfo();
         }
         break;
-      default:
-        {
-          if (state.value.num1 != '' && state.value.operator != null) {
-            if (state.value.num2 != '') {
-              math();
-              printInfo();
-            } else {
-              //TODO тут загвоздка в operator: operation. если мы сделаем 7+9+= то сохранится =, а нужен +, но state уже сменился и получить предыдущий оператор не представляется возможным
-              state.value = CalcState(num1: state.value.num1,
-                  num2: state.value.num1,
-                  result: state.value.num1,
-                  operator: operation);
-              math();
-              printInfo();
-            }
-          }
-          else {
-            state.value = CalcState(
-                num1: state.value.num1,
-                result: state.value.num1,
-                operator: operation);
-            printInfo();
-          }
-        }
     }
   }
 
-  void onPercentage() {}
-
-  void onPlusMinus() {}
-
-  void onDecimal() {}
+//  void onPercentage() {}
+//
+//  void onPlusMinus() {}
+//
+//  void onDecimal() {}
 
   void math() {
-//    if (state.value.operator == '+') {
+    if (state.value.num2.isEmpty) {
+      state.value = CalcState(
+          num1: state.value.num1,
+          operator: state.value.operator,
+          num2: '0',
+          result: state.value.result);
+    }
     switch (state.value.operator) {
       case '+':
         {
