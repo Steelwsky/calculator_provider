@@ -23,7 +23,7 @@ class MyButton extends StatelessWidget {
               : BoxConstraints.tight(Size(72.0, 72.0)),
           key: ValueKey('button$str'),
           onPressed: () {
-            func(str);
+            (str == 'AC') ? func() : func(str);
           },
           child: new Text(
             '$str',
@@ -31,7 +31,7 @@ class MyButton extends StatelessWidget {
                 fontSize: 30, color: Colors.white, fontWeight: FontWeight.w500),
           ),
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(36.0)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(36.0)),
           elevation: 2.0,
           fillColor: Colors.indigo,
           padding: isZero == true
