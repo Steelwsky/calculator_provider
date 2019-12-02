@@ -453,6 +453,92 @@ void main() {
   },);
 
 
+  testWidgets(
+    'testing onPlusMinus 1: should be 0 when user press +- after app is pumped', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonPlusMinus, tester);
+    thenResultShouldBe('0');
+  },);
+
+  testWidgets(
+    'testing onPlusMinus 1.1: should be 0 when user press +-, 0 , 0 after app is pumped', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonPlusMinus, tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonZero, tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonZero, tester);
+    thenResultShouldBe('0');
+  },);
+
+  testWidgets(
+    'testing onPlusMinus 1.1: should be 4 when user press +-, 4 after app is pumped', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonPlusMinus, tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+  },);
+
+  testWidgets(
+    'testing onPlusMinus 2: user press 4, then +- => should be -4', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPlusMinus, tester);
+    thenResultShouldBe('-4');
+
+  },);
+
+  testWidgets(
+    'testing onPlusMinus 3: user press 4, then +-, then +- => should be 4', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPlusMinus, tester);
+    thenResultShouldBe('-4');
+    await whenUserPressButton(buttonPlusMinus, tester);
+    thenResultShouldBe('4');
+  },);
+
+  testWidgets(
+    'testing onPlusMinus 4: user press 4, +, then 7, +-, = button => should be -3.0', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('7');
+    await whenUserPressButton(buttonPlusMinus, tester);
+    thenResultShouldBe('-7');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('-3.0');
+  },);
+
+  testWidgets(
+    'testing onPlusMinus 5: user press 4, +, +-, then 7, and = button => should be 11.0', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPlusMinus, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('7');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('11.0');
+  },);
+
+
   testWidgets('check clear(), must be 0', (WidgetTester tester) async {
     await pumpGivenApp(tester);
     thenResultShouldBe('0');
@@ -494,6 +580,8 @@ Finder get buttonMinus => find.byKey(ValueKey('button-'));
 Finder get buttonDivide => find.byKey(ValueKey('button/'));
 
 Finder get buttonDecimal => find.byKey(ValueKey('button.'));
+
+Finder get buttonPlusMinus => find.byKey(ValueKey('button+-'));
 
 Finder get buttonClear => find.byKey(ValueKey('buttonAC'));
 

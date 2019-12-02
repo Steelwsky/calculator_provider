@@ -21,41 +21,40 @@ class CalcController {
   void onNumber(String input) {
     print('onNumber: ');
     printInfo();
-    if (state.value.result == 'Infinity' ||
-        (state.value.num2 == '' &&
-            state.value.operator == '=' &&
-            state.value.num1 == state.value.result)) {
-      print('clear in onNumber');
-      clear();
-    }
-    if (state.value.operator == null) {
-      if (state.value.num1 == '0') {
-        final newState = CalcState(num1: input, result: input);
-        state.value = newState;
-        printInfo();
+      if (state.value.result == 'Infinity' ||
+          (state.value.num2 == '' &&
+              state.value.operator == '=' &&
+              state.value.num1 == state.value.result)) {
+        print('clear in onNumber');
+        clear();
+      }
+      if (state.value.operator == null) {
+        if (state.value.num1 == '0') {
+          final newState = CalcState(num1: input, result: input);
+          state.value = newState;
+          printInfo();
+        } else {
+          final newState = CalcState(
+            num1: state.value.num1 + input,
+            result: state.value.num1 + input,
+          );
+          state.value = newState;
+          printInfo();
+        }
       } else {
         final newState = CalcState(
-          num1: state.value.num1 + input,
-          result: state.value.num1 + input,
+          num1: state.value.num1,
+          num2: state.value.num2 + input,
+          operator: state.value.operator,
+          result: state.value.num2 + input,
         );
         state.value = newState;
         printInfo();
       }
-    } else {
-      final newState = CalcState(
-        num1: state.value.num1,
-        num2: state.value.num2 + input,
-        operator: state.value.operator,
-        result: state.value.num2 + input,
-      );
-      state.value = newState;
-      printInfo();
-    }
   }
 
   void onOperator(String operation) {
     // DONE i think it can be much smaller. REDO THIS METHOD
-    // TODO remove '=' from this method to a separate one. Maybe not.
     switch (operation) {
       case '=':
         {
@@ -92,8 +91,51 @@ class CalcController {
 
 //  void onPercentage() {}
 //
-//  void onPlusMinus() {}
-//
+
+  // onPlusMinus() doesn't have case which allows to +- after app is pimped and have -0
+  void onPlusMinus() {
+    if (state.value.operator == null) {
+      // num1
+      if (state.value.num1 == '0') {
+        return;
+//        state.value = CalcState(num1: '-0', result: '-0');
+//        printInfo();
+      } else {
+        if (state.value.num1.contains('-')) {
+          print('we had minus');
+          state.value = CalcState(
+            num1: state.value.num1.replaceFirst('-', ''),
+            result: state.value.num1.replaceFirst('-', ''),
+          );
+        } else {
+          print('we had plus');
+          state.value = CalcState(
+            num1: '-' + state.value.num1,
+            result: '-' + state.value.num1,
+          );
+        }
+        printInfo();
+      }
+    } else {
+      // num2
+      if (state.value.num1.contains('-')) {
+        state.value = CalcState(
+          num1: state.value.num1.replaceFirst('-', ''),
+          result: '-' + state.value.num1.replaceFirst('-', ''),
+        );
+      } else {
+        if (state.value.num2 != '') {
+          state.value = CalcState(
+            num1: state.value.num1,
+            num2: '-' + state.value.num2,
+            operator: state.value.operator,
+            result: '-' + state.value.num2,
+          );
+        }
+      }
+      printInfo();
+    }
+  }
 
   void onDecimal() {
     if (state.value.result == 'Infinity' ||
@@ -115,10 +157,11 @@ class CalcController {
       } else {
         print('onDecmal: num2');
         state.value = CalcState(
-            num1: state.value.num1,
-            num2: state.value.num2 + '0' + '.',
-            operator: state.value.operator,
-            result: state.value.num2 + '0' + '.');
+          num1: state.value.num1,
+          num2: '0.',
+          operator: state.value.operator,
+          result: '0.',
+        );
       }
     }
   }
@@ -186,7 +229,6 @@ class CalcController {
 
   void clear() {
     state.value = CalcState();
-//    printInfo();
     print('*******CLEARED******');
   }
 

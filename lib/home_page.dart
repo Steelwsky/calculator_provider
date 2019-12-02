@@ -20,7 +20,7 @@ class MyHomePage extends StatelessWidget {
             Row(
               children: <Widget>[
                 MyButton(str: 'AC', func: calcController.clear),
-                MyButton(str: '+-', func: calcController.onOperator),
+                MyButton(str: '+-', func: calcController.onPlusMinus),
                 MyButton(str: '%', func: calcController.onOperator),
                 MyButton(str: '/', func: calcController.onOperator),
               ],
