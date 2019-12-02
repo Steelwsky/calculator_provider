@@ -23,7 +23,7 @@ class MyButton extends StatelessWidget {
               : BoxConstraints.tight(Size(72.0, 72.0)),
           key: ValueKey('button$str'),
           onPressed: () {
-            (str == 'AC') ? func() : func(str);
+            (str == 'AC' || str == '.') ? func() : func(str);
           },
           child: new Text(
             '$str',

@@ -22,7 +22,9 @@ class CalcController {
     print('onNumber: ');
     printInfo();
     if (state.value.result == 'Infinity' ||
-        (state.value.num2 == '' && state.value.operator == '=' && state.value.num1 == state.value.result)) {
+        (state.value.num2 == '' &&
+            state.value.operator == '=' &&
+            state.value.num1 == state.value.result)) {
       print('clear in onNumber');
       clear();
     }
@@ -71,33 +73,55 @@ class CalcController {
         break;
       default:
         {
+          //allows do this: 7 + 4 + = 22.0.
+          //Second '+' calls math() for internal calculate
           if (state.value.operator != '=' && state.value.num2 != '') {
             math();
             print('helper calc for additional operator');
           }
-            state.value = CalcState(
-              num1: state.value.num1,
-              num2: state.value.num2,
-              operator: operation,
-              result: state.value.result,
-            );
+          state.value = CalcState(
+            num1: state.value.num1,
+            num2: state.value.num2,
+            operator: operation,
+            result: state.value.result,
+          );
         }
     }
-    //allows do this: 7 + 4 + = 22.0.
-    //Second '+' calls math() for internal calculate
-//    printInfo();
-//    if (state.value.operator != '=' && state.value.num2 != '') {
-//      math();
-//      print('helper calc for additional operator');
-//      return;
-//    }
+    printInfo();
   }
 
 //  void onPercentage() {}
 //
 //  void onPlusMinus() {}
 //
-//  void onDecimal() {}
+
+  void onDecimal() {
+    if (state.value.result == 'Infinity' ||
+        (state.value.num2 == '' &&
+            state.value.operator == '=' &&
+            state.value.num1 == state.value.result)) {
+      print('clear in onDecimal');
+      clear();
+    }
+    if (state.value.num1.contains('.')) {
+      return;
+    } else {
+      if (state.value.operator == null) {
+        print('onDecmal: num1');
+        state.value = CalcState(
+            num1: state.value.num1 + '.',
+            operator: state.value.operator,
+            result: state.value.num1 + '.');
+      } else {
+        print('onDecmal: num2');
+        state.value = CalcState(
+            num1: state.value.num1,
+            num2: state.value.num2 + '0' + '.',
+            operator: state.value.operator,
+            result: state.value.num2 + '0' + '.');
+      }
+    }
+  }
 
   void math() {
     printInfo();

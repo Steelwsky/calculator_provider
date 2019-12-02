@@ -60,7 +60,7 @@ class MyHomePage extends StatelessWidget {
             Row(
               children: <Widget>[
                 MyButton(str: '0', func: calcController.onNumber),
-                MyButton(str: ',', func: calcController.onNumber),
+                MyButton(str: '.', func: calcController.onDecimal),
                 MyButton(str: '=', func: calcController.onOperator),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
