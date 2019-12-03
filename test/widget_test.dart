@@ -538,6 +538,88 @@ void main() {
     thenResultShouldBe('11.0');
   },);
 
+  testWidgets('testing onPercentage 1: user press 4 and % => should be 0.04', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPercentage, tester);
+    thenResultShouldBe('0.04');
+  },);
+
+  testWidgets('testing onPercentage 2: user press 4, +, 7, % = 4.28', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('7');
+    await whenUserPressButton(buttonPercentage, tester);
+    thenResultShouldBe('0.28');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('4.28');
+  },);
+
+  testWidgets('testing onPercentage 3: user press 4, *, 7, % = 0.28', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonMulti, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('7');
+    await whenUserPressButton(buttonPercentage, tester);
+    thenResultShouldBe('0.07');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('0.28');
+  },);
+
+  testWidgets('testing onPercentage 4: user press 4 and % and % => should be 0.0004', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPercentage, tester);
+    thenResultShouldBe('0.04');
+    await whenUserPressButton(buttonPercentage, tester);
+    thenResultShouldBe('0.0004');
+  },);
+
+  testWidgets('testing onPercentage 5: user press 4, *, 7, % = 0.28 + 4 = 4.28', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonMulti, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('7');
+    await whenUserPressButton(buttonPercentage, tester);
+    thenResultShouldBe('0.07');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('0.28');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('0.28');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('4.28');
+  },);
+
+  testWidgets('testing onPercentage 6: user press 4 and % and .decimalButton => should be 0.04', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPercentage, tester);
+    thenResultShouldBe('0.04');
+    await whenUserPressButton(buttonDecimal, tester);
+    thenResultShouldBe('0.04');
+  },);
+
 
   testWidgets('check clear(), must be 0', (WidgetTester tester) async {
     await pumpGivenApp(tester);
@@ -576,12 +658,16 @@ Finder get buttonPlus => find.byKey(ValueKey('button+'));
 Finder get buttonEqual => find.byKey(ValueKey('button='));
 
 Finder get buttonMinus => find.byKey(ValueKey('button-'));
-//Finder get buttonMulti => find.byKey(ValueKey('button*'));
+
+Finder get buttonMulti => find.byKey(ValueKey('button*'));
+
 Finder get buttonDivide => find.byKey(ValueKey('button/'));
 
 Finder get buttonDecimal => find.byKey(ValueKey('button.'));
 
 Finder get buttonPlusMinus => find.byKey(ValueKey('button+-'));
+
+Finder get buttonPercentage => find.byKey(ValueKey('button%'));
 
 Finder get buttonClear => find.byKey(ValueKey('buttonAC'));
 

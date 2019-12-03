@@ -21,36 +21,36 @@ class CalcController {
   void onNumber(String input) {
     print('onNumber: ');
     printInfo();
-      if (state.value.result == 'Infinity' ||
-          (state.value.num2 == '' &&
-              state.value.operator == '=' &&
-              state.value.num1 == state.value.result)) {
-        print('clear in onNumber');
-        clear();
-      }
-      if (state.value.operator == null) {
-        if (state.value.num1 == '0') {
-          final newState = CalcState(num1: input, result: input);
-          state.value = newState;
-          printInfo();
-        } else {
-          final newState = CalcState(
-            num1: state.value.num1 + input,
-            result: state.value.num1 + input,
-          );
-          state.value = newState;
-          printInfo();
-        }
+    if (state.value.result == 'Infinity' ||
+        (state.value.num2 == '' &&
+            state.value.operator == '=' &&
+            state.value.num1 == state.value.result)) {
+      print('clear in onNumber');
+      clear();
+    }
+    if (state.value.operator == null) {
+      if (state.value.num1 == '0') {
+        final newState = CalcState(num1: input, result: input);
+        state.value = newState;
+        printInfo();
       } else {
         final newState = CalcState(
-          num1: state.value.num1,
-          num2: state.value.num2 + input,
-          operator: state.value.operator,
-          result: state.value.num2 + input,
+          num1: state.value.num1 + input,
+          result: state.value.num1 + input,
         );
         state.value = newState;
         printInfo();
       }
+    } else {
+      final newState = CalcState(
+        num1: state.value.num1,
+        num2: state.value.num2 + input,
+        operator: state.value.operator,
+        result: state.value.num2 + input,
+      );
+      state.value = newState;
+      printInfo();
+    }
   }
 
   void onOperator(String operation) {
@@ -89,8 +89,38 @@ class CalcController {
     printInfo();
   }
 
-//  void onPercentage() {}
-//
+  void onPercentage() {
+    if (state.value.operator == null) {
+      print('onPerc, num1: ${state.value.num1}');
+      state.value = CalcState(
+        num1: (double.parse(state.value.num1) * 0.01).toString(),
+        result: (double.parse(state.value.num1) * 0.01).toString(),
+      );
+    } else {
+      print('onPerc, num2: ${state.value.num2}');
+      if (state.value.operator == '+' || state.value.operator == '-') {
+        state.value = CalcState(
+          num1: state.value.num1,
+          operator: state.value.operator,
+          num2: (double.parse(state.value.num1) *
+                  double.parse(state.value.num2) *
+                  0.01)
+              .toString(),
+          result: (double.parse(state.value.num1) *
+                  double.parse(state.value.num2) *
+                  0.01)
+              .toString(),
+        );
+      } else {
+        state.value = CalcState(
+          num1: state.value.num1,
+          operator: state.value.operator,
+          num2: (double.parse(state.value.num2) * 0.01).toString(),
+          result: (double.parse(state.value.num2) * 0.01).toString(),
+        );
+      }
+    }
+  }
 
   // onPlusMinus() doesn't have case which allows to +- after app is pimped and have -0
   void onPlusMinus() {

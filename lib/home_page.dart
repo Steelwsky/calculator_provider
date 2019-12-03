@@ -21,7 +21,7 @@ class MyHomePage extends StatelessWidget {
               children: <Widget>[
                 MyButton(str: 'AC', func: calcController.clear),
                 MyButton(str: '+-', func: calcController.onPlusMinus),
-                MyButton(str: '%', func: calcController.onOperator),
+                MyButton(str: '%', func: calcController.onPercentage),
                 MyButton(str: '/', func: calcController.onOperator),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
