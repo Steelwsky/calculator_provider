@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/number_symbols_data.dart';
+import 'package:intl/number_symbols.dart';
 
 class CalcState {
   CalcState({
@@ -59,6 +62,9 @@ class CalcController {
       return;
     }
     if (state.value.operator == null) {
+//      if(isOnPercentageCalled) {
+//
+//      }
       if (state.value.num1 == '0') {
         final newState = CalcState(num1: input, result: input);
         state.value = newState;
@@ -298,10 +304,38 @@ class CalcController {
     isOnDecimalCalled = false;
   }
 
+
   void clear() {
     state.value = CalcState();
     print('*******CLEARED******');
   }
+
+ String decimalHelper(String number) {
+    print('number before is: $number');
+    final double doubleNumber = double.parse(number);
+    numberFormatSymbols['zz'] = new NumberSymbols(
+      NAME: "zz",
+      DECIMAL_SEP: ',',
+      GROUP_SEP: '\u00A0',
+      PERCENT: '%',
+      ZERO_DIGIT: '0',
+      PLUS_SIGN: '+',
+      MINUS_SIGN: '-',
+      EXP_SYMBOL: 'e',
+      PERMILL: '\u2030',
+      INFINITY: '\u221E',
+      NAN: 'NaN',
+      DECIMAL_PATTERN: '# ##0.###',
+      SCIENTIFIC_PATTERN: '#E0',
+      PERCENT_PATTERN: '#,##0%',
+      CURRENCY_PATTERN: '\u00A4#,##0.00',
+      DEF_CURRENCY_CODE: 'AUD',
+    );
+    final f = new NumberFormat('#,###.#####', 'zz');
+    return f.format(doubleNumber);
+//    f.format(number);
+  }
+
 
   void printInfo(String string) {
     print('$string:  state: num1: ${state.value.num1}, '
