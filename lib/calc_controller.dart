@@ -84,6 +84,7 @@ class CalcController {
   }
 
   void onOperator(String operation) {
+    isOnDecimalCalled = false;
     // DONE i think it can be much smaller. REDO THIS METHOD
     switch (operation) {
       case '=':
