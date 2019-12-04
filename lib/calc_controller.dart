@@ -84,7 +84,6 @@ class CalcController {
   }
 
   void onOperator(String operation) {
-    isOnDecimalCalled = false;
     // DONE i think it can be much smaller. REDO THIS METHOD
     switch (operation) {
       case '=':
@@ -97,7 +96,7 @@ class CalcController {
             result: state.value.result,
           );
           printInfo('onOperator');
-          print('are we here?, ${state.value.operator}');
+          print('onOperator: are we here?, ${state.value.operator}');
           return;
         }
         break;
@@ -117,6 +116,8 @@ class CalcController {
           );
         }
     }
+    isOnDecimalCalled = false;
+    isOnPercentageCalled = false;
     printInfo('onOperator');
   }
 
@@ -135,13 +136,11 @@ class CalcController {
           num1: state.value.num1,
           operator: state.value.operator,
           num2: (double.parse(state.value.num1) *
-              double.parse(state.value.num2) *
-              0.01)
-              .toString(),
+                  double.parse(state.value.num2) *
+                  0.01).toString(),
           result: (double.parse(state.value.num1) *
-              double.parse(state.value.num2) *
-              0.01)
-              .toString(),
+                  double.parse(state.value.num2) *
+                  0.01).toString(),
         );
       } else {
         state.value = CalcState(
@@ -208,10 +207,10 @@ class CalcController {
       print('clear in onDecimal');
       clear();
     }
-    if (state.value.num1.contains('.')) {
+    if (state.value.num1.contains('.') && state.value.operator == null) {
       print(
-          'onDecimal, if contains . and isOnPercentageCalled = $isOnPercentageCalled');
-      if (isOnPercentageCalled) {
+          'onDecimal, contains DOT,  isOnPercentageCalled = $isOnPercentageCalled');
+      if (isOnPercentageCalled == true) {
         state.value = CalcState(num1: '0.', result: '0.');
         isOnDecimalCalled = true;
       } else
@@ -296,6 +295,7 @@ class CalcController {
         }
         break;
     }
+    isOnDecimalCalled = false;
   }
 
   void clear() {

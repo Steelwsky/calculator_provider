@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider_calc_expanded/main.dart';
 
+//TODO to fix onPercentage 13,14 tests, i have to create decimalFormatHelper
+
 void main() {
   testWidgets('pumped app shows 0 at the start', (WidgetTester tester) async {
     await pumpGivenApp(tester);
@@ -745,8 +747,7 @@ void main() {
     thenResultShouldBe('11.7');
   },);
 
-  testWidgets(
-    'testing onPercentage 13: user press 4, + 7, %, .DOTBUTTON, 7, + , 7 = button => should be 11.7. '
+  testWidgets('testing onPercentage 13: user press 4, + 7, %, .DOTBUTTON, 7, + , 7 = button => should be 11.7. '
         'AND then DOTBUTTON, 7 + 4, % = button => should be 7.28 ', (
       WidgetTester tester) async {
     await pumpGivenApp(tester);
@@ -778,9 +779,45 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.28');
+    thenResultShouldBe('0.028');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('7.28');
+    thenResultShouldBe('0.728');
+  },);
+
+  testWidgets('testing onPercentage 14:  DOTBUTTON, 7 + 4, % = button => should be 7.28 ', (
+      WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonDecimal, tester);
+    thenResultShouldBe('0.');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('0.7');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('0.7');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPercentage, tester);
+    thenResultShouldBe('0.028');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('0.728');
+  },);
+
+  testWidgets('testing onPercentage 15:  4, %, + DOTBUTTON, 7 = button => should be 7.28 ', (
+      WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPercentage, tester);
+    thenResultShouldBe('0.04');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('0.04');
+    await whenUserPressButton(buttonDecimal, tester);
+    thenResultShouldBe('0.');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('0.7');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('0.74');
   },);
 
   testWidgets('check clear(), must be 0', (WidgetTester tester) async {
