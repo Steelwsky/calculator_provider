@@ -17,10 +17,13 @@ class CalcState {
 class CalcController {
   final ValueNotifier<CalcState> state = ValueNotifier(CalcState());
 
-  //TODO call clear() in this case: 4 + 7 = 4 +. Now i get 15, but i want to receive 4.
+  // не получилось уйти от введения bool
+  bool isOnPercentageCalled = false;
+  bool isOnDecimalCalled = false;
+
+  //DONE call clear() in this case: 4 + 7 = 4 +. Now i get 15, but i want to receive 4.
   void onNumber(String input) {
-    print('onNumber: ');
-    printInfo();
+    printInfo('onNumber');
     if (state.value.result == 'Infinity' ||
         (state.value.num2 == '' &&
             state.value.operator == '=' &&
@@ -28,18 +31,45 @@ class CalcController {
       print('clear in onNumber');
       clear();
     }
+    if (isOnPercentageCalled) {
+      print('isOnPercentageCalled');
+      if (state.value.operator == null) {
+        if (isOnDecimalCalled) {
+          state.value = CalcState(
+              num1: state.value.num1 + input, result: state.value.num1 + input);
+        } else
+          state.value = CalcState(num1: input, result: input);
+      } else {
+        if (isOnDecimalCalled) {
+          state.value = CalcState(
+            num1: state.value.num1,
+            operator: state.value.operator,
+            num2: state.value.num2 + input,
+            result: state.value.num2 + input,
+          );
+        } else
+          state.value = CalcState(
+            num1: state.value.num1,
+            operator: state.value.operator,
+            num2: input,
+            result: input,
+          );
+      }
+      isOnPercentageCalled = false;
+      return;
+    }
     if (state.value.operator == null) {
       if (state.value.num1 == '0') {
         final newState = CalcState(num1: input, result: input);
         state.value = newState;
-        printInfo();
+        printInfo('onNumber');
       } else {
         final newState = CalcState(
           num1: state.value.num1 + input,
           result: state.value.num1 + input,
         );
         state.value = newState;
-        printInfo();
+        printInfo('onNumber');
       }
     } else {
       final newState = CalcState(
@@ -49,7 +79,7 @@ class CalcController {
         result: state.value.num2 + input,
       );
       state.value = newState;
-      printInfo();
+      printInfo('onNumber');
     }
   }
 
@@ -65,7 +95,7 @@ class CalcController {
             num2: state.value.num2,
             result: state.value.result,
           );
-          printInfo();
+          printInfo('onOperator');
           print('are we here?, ${state.value.operator}');
           return;
         }
@@ -86,10 +116,11 @@ class CalcController {
           );
         }
     }
-    printInfo();
+    printInfo('onOperator');
   }
 
   void onPercentage() {
+    isOnPercentageCalled = true;
     if (state.value.operator == null) {
       print('onPerc, num1: ${state.value.num1}');
       state.value = CalcState(
@@ -103,12 +134,12 @@ class CalcController {
           num1: state.value.num1,
           operator: state.value.operator,
           num2: (double.parse(state.value.num1) *
-                  double.parse(state.value.num2) *
-                  0.01)
+              double.parse(state.value.num2) *
+              0.01)
               .toString(),
           result: (double.parse(state.value.num1) *
-                  double.parse(state.value.num2) *
-                  0.01)
+              double.parse(state.value.num2) *
+              0.01)
               .toString(),
         );
       } else {
@@ -120,6 +151,7 @@ class CalcController {
         );
       }
     }
+    printInfo('onPercentage');
   }
 
   // onPlusMinus() doesn't have case which allows to +- after app is pimped and have -0
@@ -144,7 +176,7 @@ class CalcController {
             result: '-' + state.value.num1,
           );
         }
-        printInfo();
+        printInfo('onPlusMinus');
       }
     } else {
       // num2
@@ -163,7 +195,7 @@ class CalcController {
           );
         }
       }
-      printInfo();
+      printInfo('onPlusMinus');
     }
   }
 
@@ -176,7 +208,13 @@ class CalcController {
       clear();
     }
     if (state.value.num1.contains('.')) {
-      return;
+      print(
+          'onDecimal, if contains . and isOnPercentageCalled = $isOnPercentageCalled');
+      if (isOnPercentageCalled) {
+        state.value = CalcState(num1: '0.', result: '0.');
+        isOnDecimalCalled = true;
+      } else
+        return;
     } else {
       if (state.value.operator == null) {
         print('onDecmal: num1');
@@ -184,6 +222,7 @@ class CalcController {
             num1: state.value.num1 + '.',
             operator: state.value.operator,
             result: state.value.num1 + '.');
+        isOnDecimalCalled = true;
       } else {
         print('onDecmal: num2');
         state.value = CalcState(
@@ -192,12 +231,13 @@ class CalcController {
           operator: state.value.operator,
           result: '0.',
         );
+        isOnDecimalCalled = true;
       }
     }
   }
 
   void math() {
-    printInfo();
+    printInfo('math');
     if (state.value.num2 == '') {
       state.value = CalcState(
           num1: state.value.num1,
@@ -262,8 +302,8 @@ class CalcController {
     print('*******CLEARED******');
   }
 
-  void printInfo() {
-    print('state: num1: ${state.value.num1}, '
+  void printInfo(String string) {
+    print('$string:  state: num1: ${state.value.num1}, '
         'num2: ${state.value.num2}, '
         'result: ${state.value.result}, '
         'operator: ${state.value.operator}');
