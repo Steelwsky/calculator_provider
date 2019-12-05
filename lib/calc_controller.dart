@@ -24,9 +24,10 @@ class CalcController {
   bool isOnPercentageCalled = false;
   bool isOnDecimalCalled = false;
 
-  //DONE call clear() in this case: 4 + 7 = 4 +. Now i get 15, but i want to receive 4.
+  //DONE somehow --- onNumber is very strange now. if(isOnPerc){... if(isOnDecimalCalled) else if(isOnDecimalCalled){}}} need to reformat
   void onNumber(String input) {
     printInfo('onNumber');
+    // is needed to be clear
     if (state.value.result == 'Infinity' ||
         (state.value.num2 == '' &&
             state.value.operator == '=' &&
@@ -34,37 +35,26 @@ class CalcController {
       print('clear in onNumber');
       clear();
     }
-    if (isOnPercentageCalled) {
-      print('isOnPercentageCalled');
-      if (state.value.operator == null) {
-        if (isOnDecimalCalled) {
-          state.value = CalcState(
-              num1: state.value.num1 + input, result: state.value.num1 + input);
-        } else
-          state.value = CalcState(num1: input, result: input);
-      } else {
-        if (isOnDecimalCalled) {
-          state.value = CalcState(
-            num1: state.value.num1,
-            operator: state.value.operator,
-            num2: state.value.num2 + input,
-            result: state.value.num2 + input,
-          );
-        } else
-          state.value = CalcState(
-            num1: state.value.num1,
-            operator: state.value.operator,
-            num2: input,
-            result: input,
-          );
-      }
-      isOnPercentageCalled = false;
-      return;
-    }
+    // FIRSTNUMBER
     if (state.value.operator == null) {
-//      if(isOnPercentageCalled) {
-//
-//      }
+      if (isOnPercentageCalled) {
+        print('isOnPercentageCalled, num1');
+        if (isOnDecimalCalled) {
+          print('isOnPercentageCalled, isOnDecimalCalled = true, num1');
+          state.value = CalcState(
+            num1: state.value.num1 + input,
+            result: state.value.num1 + input,
+          );
+          return;
+        } else
+          print('isOnPercentageCalled, isOnDecimalCalled = false, num1');
+        state.value = CalcState(
+          num1: input,
+          result: input,
+        );
+        isOnPercentageCalled = false;
+        return;
+      }
       if (state.value.num1 == '0') {
         final newState = CalcState(num1: input, result: input);
         state.value = newState;
@@ -77,7 +67,32 @@ class CalcController {
         state.value = newState;
         printInfo('onNumber');
       }
-    } else {
+    }
+    //SECONDNUMBER
+    else {
+      if (isOnPercentageCalled) {
+        print('isOnPercentageCalled, num2');
+        if (isOnDecimalCalled) {
+          print('isOnPercentageCalled, isOnDecimalCalled = true, num2');
+          state.value = CalcState(
+            num1: state.value.num1,
+            operator: state.value.operator,
+            num2: state.value.num2 + input,
+            result: state.value.num2 + input,
+          );
+          isOnPercentageCalled = false;
+          return;
+        } else
+          print('isOnPercentageCalled, isOnDecimalCalled = false, num2');
+        state.value = CalcState(
+          num1: state.value.num1,
+          operator: state.value.operator,
+          num2: input,
+          result: input,
+        );
+        isOnPercentageCalled = false;
+        return;
+      }
       final newState = CalcState(
         num1: state.value.num1,
         num2: state.value.num2 + input,
@@ -143,10 +158,12 @@ class CalcController {
           operator: state.value.operator,
           num2: (double.parse(state.value.num1) *
                   double.parse(state.value.num2) *
-                  0.01).toString(),
+              0.01)
+              .toString(),
           result: (double.parse(state.value.num1) *
                   double.parse(state.value.num2) *
-                  0.01).toString(),
+              0.01)
+              .toString(),
         );
       } else {
         state.value = CalcState(
@@ -304,13 +321,12 @@ class CalcController {
     isOnDecimalCalled = false;
   }
 
-
   void clear() {
     state.value = CalcState();
     print('*******CLEARED******');
   }
 
- String decimalHelper(String number) {
+  String decimalHelper(String number) {
     print('number before is: $number');
     final double doubleNumber = double.parse(number);
     numberFormatSymbols['zz'] = new NumberSymbols(
@@ -335,7 +351,6 @@ class CalcController {
     return f.format(doubleNumber);
 //    f.format(number);
   }
-
 
   void printInfo(String string) {
     print('$string:  state: num1: ${state.value.num1}, '
