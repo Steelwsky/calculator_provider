@@ -77,7 +77,7 @@ void main() {
     await whenUserPressButton(buttonPlus, tester);
     thenResultShouldBe('0');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('0.0');
+    thenResultShouldBe('0');
   });
 
   testWidgets('expected to get 7.0 after: 0 + 7 =',
@@ -89,7 +89,7 @@ void main() {
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('7.0');
+    thenResultShouldBe('7');
   });
 
   testWidgets('expected to get 14.0 after: 7 + =', (WidgetTester tester) async {
@@ -100,7 +100,7 @@ void main() {
     await whenUserPressButton(buttonPlus, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('14.0');
+    thenResultShouldBe('14');
   });
 
   testWidgets('result should be 11.0 after user press: 4, +, 7, =.',
@@ -114,7 +114,7 @@ void main() {
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('11.0');
+    thenResultShouldBe('11');
   });
 
   testWidgets('result should be 4 after user press: 4, +, 7, =, 4, + .',
@@ -128,7 +128,7 @@ void main() {
         await whenUserPressButton(buttonSeven, tester);
         thenResultShouldBe('7');
         await whenUserPressButton(buttonEqual, tester);
-        thenResultShouldBe('11.0');
+        thenResultShouldBe('11');
         await whenUserPressButton(buttonFour, tester);
         thenResultShouldBe('4');
         await whenUserPressButton(buttonPlus, tester);
@@ -150,7 +150,7 @@ void main() {
     await whenUserPressButton(buttonZero, tester);
     thenResultShouldBe('70');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('110.0');
+    thenResultShouldBe('110');
   });
 
   testWidgets('result should be -3.0 after user press: 4, +, -, 7, = ',
@@ -166,7 +166,7 @@ void main() {
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('-3.0');
+    thenResultShouldBe('-3');
   });
 
   testWidgets('result should be 7 after user press + after first math result',
@@ -180,9 +180,9 @@ void main() {
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('11.0');
+    thenResultShouldBe('11');
     await whenUserPressButton(buttonPlus, tester);
-    thenResultShouldBe('11.0');
+    thenResultShouldBe('11');
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
   });
@@ -199,13 +199,13 @@ void main() {
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('11.0');
+    thenResultShouldBe('11');
     await whenUserPressButton(buttonPlus, tester);
-    thenResultShouldBe('11.0');
+    thenResultShouldBe('11');
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('18.0');
+    thenResultShouldBe('18');
   });
 
   testWidgets('should be INFINITY by calculating 7 / 0 =',
@@ -219,7 +219,7 @@ void main() {
     await whenUserPressButton(buttonZero, tester);
     thenResultShouldBe('0');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('Infinity');
+    thenResultShouldBe('∞');
   });
 
   testWidgets('should be 7 as num1 and a result after getting INFINITY',
@@ -233,7 +233,7 @@ void main() {
     await whenUserPressButton(buttonZero, tester);
     thenResultShouldBe('0');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('Infinity');
+    thenResultShouldBe('∞');
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
   });
@@ -249,7 +249,7 @@ void main() {
         await whenUserPressButton(buttonZero, tester);
         thenResultShouldBe('0');
         await whenUserPressButton(buttonEqual, tester);
-        thenResultShouldBe('Infinity');
+        thenResultShouldBe('∞');
         await whenUserPressButton(buttonSeven, tester);
         thenResultShouldBe('7');
         await whenUserPressButton(buttonPlus, tester);
@@ -257,7 +257,7 @@ void main() {
         await whenUserPressButton(buttonFour, tester);
         thenResultShouldBe('4');
         await whenUserPressButton(buttonEqual, tester);
-        thenResultShouldBe('11.0');
+        thenResultShouldBe('11');
       });
 
   testWidgets('simple divide test: 7 / 4 should give 1.75',
@@ -271,12 +271,12 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('1.75');
+    thenResultShouldBe('1,75');
   });
 
   testWidgets(
       'should calculate after both nums are taken and operator as well, '
-      '4 + 7 + = 11.0', (WidgetTester tester) async {
+          '4 + 7 + = 11', (WidgetTester tester) async {
     await pumpGivenApp(tester);
     thenResultShouldBe('0');
     await whenUserPressButton(buttonFour, tester);
@@ -286,10 +286,10 @@ void main() {
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonPlus, tester);
-    thenResultShouldBe('11.0');
+    thenResultShouldBe('11');
   });
 
-  testWidgets('7 + 4 + = 22.0', (WidgetTester tester) async {
+  testWidgets('7 + 4 + = 22', (WidgetTester tester) async {
     await pumpGivenApp(tester);
     thenResultShouldBe('0');
     await whenUserPressButton(buttonSeven, tester);
@@ -299,12 +299,12 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonPlus, tester);
-    thenResultShouldBe('11.0');
+    thenResultShouldBe('11');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('22.0');
+    thenResultShouldBe('22');
   });
 
-  testWidgets('7 + 4 + 7 = 18.0', (WidgetTester tester) async {
+  testWidgets('7 + 4 + 7 = 18', (WidgetTester tester) async {
     await pumpGivenApp(tester);
     thenResultShouldBe('0');
     await whenUserPressButton(buttonSeven, tester);
@@ -314,14 +314,14 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonPlus, tester);
-    thenResultShouldBe('11.0');
+    thenResultShouldBe('11');
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('18.0');
+    thenResultShouldBe('18');
   });
 
-  testWidgets('7 + 4 - 4 = 3.0', (WidgetTester tester) async {
+  testWidgets('7 + 4 - 4 = 3', (WidgetTester tester) async {
     await pumpGivenApp(tester);
     thenResultShouldBe('0');
     await whenUserPressButton(buttonSeven, tester);
@@ -331,11 +331,11 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonMinus, tester);
-    thenResultShouldBe('11.0');
+    thenResultShouldBe('11');
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('7.0');
+    thenResultShouldBe('7');
   });
 
   testWidgets(
@@ -346,9 +346,9 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('4.');
+    thenResultShouldBe('4,');
     await whenUserPressButton(buttonSeven, tester);
-    thenResultShouldBe('4.7');
+    thenResultShouldBe('4,7');
   },);
 
   testWidgets(
@@ -359,9 +359,9 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('4.');
+    thenResultShouldBe('4,');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('4.');
+    thenResultShouldBe('4,');
   },);
 
   testWidgets(
@@ -372,11 +372,11 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('4.');
+    thenResultShouldBe('4,');
     await whenUserPressButton(buttonSeven, tester);
-    thenResultShouldBe('4.7');
+    thenResultShouldBe('4,7');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('4.7');
+    thenResultShouldBe('4,7');
   },);
 
   testWidgets(
@@ -387,11 +387,11 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('4.');
+    thenResultShouldBe('4,');
     await whenUserPressButton(buttonZero, tester);
-    thenResultShouldBe('4.0');
+    thenResultShouldBe('4,0');
     await whenUserPressButton(buttonZero, tester);
-    thenResultShouldBe('4.00');
+    thenResultShouldBe('4,00');
   },);
 
   testWidgets(
@@ -400,9 +400,9 @@ void main() {
     await pumpGivenApp(tester);
     thenResultShouldBe('0');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('0.');
+    thenResultShouldBe('0,');
     await whenUserPressButton(buttonFour, tester);
-    thenResultShouldBe('0.4');
+    thenResultShouldBe('0,4');
   },);
 
   testWidgets(
@@ -411,11 +411,11 @@ void main() {
     await pumpGivenApp(tester);
     thenResultShouldBe('0');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('0.');
+    thenResultShouldBe('0,');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('0.');
+    thenResultShouldBe('0,');
     await whenUserPressButton(buttonFour, tester);
-    thenResultShouldBe('0.4');
+    thenResultShouldBe('0,4');
   },);
 
   testWidgets(
@@ -428,11 +428,11 @@ void main() {
     await whenUserPressButton(buttonPlus, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('0.');
+    thenResultShouldBe('0,');
     await whenUserPressButton(buttonFour, tester);
-    thenResultShouldBe('0.4');
+    thenResultShouldBe('0,4');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('4.4');
+    thenResultShouldBe('4,4');
   },);
 
   testWidgets(
@@ -447,11 +447,11 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('8.0');
+    thenResultShouldBe('8');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('0.');
+    thenResultShouldBe('0,');
     await whenUserPressButton(buttonFour, tester);
-    thenResultShouldBe('0.4');
+    thenResultShouldBe('0,4');
   },);
 
 
@@ -526,7 +526,7 @@ void main() {
     await whenUserPressButton(buttonPlusMinus, tester);
     thenResultShouldBe('-7');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('-3.0');
+    thenResultShouldBe('-3');
   },);
 
   testWidgets(
@@ -543,7 +543,7 @@ void main() {
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('11.0');
+    thenResultShouldBe('11');
   },);
 
   testWidgets('testing onPercentage 1: user press 4 and % => should be 0.04', (WidgetTester tester) async {
@@ -552,7 +552,7 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.04');
+    thenResultShouldBe('0,04');
   },);
 
   testWidgets('testing onPercentage 2: user press 4, +, 7, % = 4.28', (WidgetTester tester) async {
@@ -565,9 +565,9 @@ void main() {
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.28');
+    thenResultShouldBe('0,28');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('4.28');
+    thenResultShouldBe('4,28');
   },);
 
   testWidgets('testing onPercentage 3: user press 4, *, 7, % = 0.28', (WidgetTester tester) async {
@@ -580,9 +580,9 @@ void main() {
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.07');
+    thenResultShouldBe('0,07');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('0.28');
+    thenResultShouldBe('0,28');
   },);
 
   testWidgets('testing onPercentage 4: user press 4 and % and % => should be 0.0004', (WidgetTester tester) async {
@@ -591,9 +591,9 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.04');
+    thenResultShouldBe('0,04');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.0004');
+    thenResultShouldBe('0,0004');
   },);
 
   testWidgets('testing onPercentage 5: user press 4, *, 7, % = 0.28 + 4 = 4.28', (WidgetTester tester) async {
@@ -606,15 +606,15 @@ void main() {
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.07');
+    thenResultShouldBe('0,07');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('0.28');
+    thenResultShouldBe('0,28');
     await whenUserPressButton(buttonPlus, tester);
-    thenResultShouldBe('0.28');
+    thenResultShouldBe('0,28');
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('4.28');
+    thenResultShouldBe('4,28');
   },);
 
   testWidgets(
@@ -625,9 +625,9 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.04');
+    thenResultShouldBe('0,04');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('0.');
+    thenResultShouldBe('0,');
   },);
 
   testWidgets('testing onPercentage 7: user press 4, % and 4 => should be 4', (
@@ -637,7 +637,7 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.04');
+    thenResultShouldBe('0,04');
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
   },);
@@ -654,7 +654,7 @@ void main() {
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.28');
+    thenResultShouldBe('0,28');
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
   },);
@@ -671,15 +671,15 @@ void main() {
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.28');
+    thenResultShouldBe('0,28');
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonPlus, tester);
-    thenResultShouldBe('8.0');
+    thenResultShouldBe('8');
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('15.0');
+    thenResultShouldBe('15');
   },);
 
   testWidgets(
@@ -690,7 +690,7 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.04');
+    thenResultShouldBe('0,04');
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonPlus, tester);
@@ -698,7 +698,7 @@ void main() {
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('11.0');
+    thenResultShouldBe('11');
   },);
 
   testWidgets(
@@ -709,17 +709,17 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.04');
+    thenResultShouldBe('0,04');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('0.');
+    thenResultShouldBe('0,');
     await whenUserPressButton(buttonSeven, tester);
-    thenResultShouldBe('0.7');
+    thenResultShouldBe('0,7');
     await whenUserPressButton(buttonPlus, tester);
-    thenResultShouldBe('0.7');
+    thenResultShouldBe('0,7');
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('7.7');
+    thenResultShouldBe('7,7');
   },);
 
   testWidgets(
@@ -734,17 +734,17 @@ void main() {
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.28');
+    thenResultShouldBe('0,28');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('0.');
+    thenResultShouldBe('0,');
     await whenUserPressButton(buttonSeven, tester);
-    thenResultShouldBe('0.7');
+    thenResultShouldBe('0,7');
     await whenUserPressButton(buttonPlus, tester);
-    thenResultShouldBe('4.7');
+    thenResultShouldBe('4,7');
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('11.7');
+    thenResultShouldBe('11,7');
   },);
 
   testWidgets('testing onPercentage 13: user press 4, + 7, %, .DOTBUTTON, 7, + , 7 = button => should be 11.7. '
@@ -759,29 +759,29 @@ void main() {
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.28');
+    thenResultShouldBe('0,28');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('0.');
+    thenResultShouldBe('0,');
     await whenUserPressButton(buttonSeven, tester);
-    thenResultShouldBe('0.7');
+    thenResultShouldBe('0,7');
     await whenUserPressButton(buttonPlus, tester);
-    thenResultShouldBe('4.7');
+    thenResultShouldBe('4,7');
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('11.7');
+    thenResultShouldBe('11,7');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('0.');
+    thenResultShouldBe('0,');
     await whenUserPressButton(buttonSeven, tester);
-    thenResultShouldBe('0.7');
+    thenResultShouldBe('0,7');
     await whenUserPressButton(buttonPlus, tester);
-    thenResultShouldBe('0.7');
+    thenResultShouldBe('0,7');
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.028');
+    thenResultShouldBe('0,028');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('0.728');
+    thenResultShouldBe('0,728');
   },);
 
   testWidgets('testing onPercentage 14:  DOTBUTTON, 7 + 4, % = button => should be 7.28 ', (
@@ -789,17 +789,17 @@ void main() {
     await pumpGivenApp(tester);
     thenResultShouldBe('0');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('0.');
+    thenResultShouldBe('0,');
     await whenUserPressButton(buttonSeven, tester);
-    thenResultShouldBe('0.7');
+    thenResultShouldBe('0,7');
     await whenUserPressButton(buttonPlus, tester);
-    thenResultShouldBe('0.7');
+    thenResultShouldBe('0,7');
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.028');
+    thenResultShouldBe('0,028');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('0.728');
+    thenResultShouldBe('0,728');
   },);
 
   testWidgets('testing onPercentage 15:  4, %, + DOTBUTTON, 7 = button => should be 7.28 ', (
@@ -809,15 +809,15 @@ void main() {
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
     await whenUserPressButton(buttonPercentage, tester);
-    thenResultShouldBe('0.04');
+    thenResultShouldBe('0,04');
     await whenUserPressButton(buttonPlus, tester);
-    thenResultShouldBe('0.04');
+    thenResultShouldBe('0,04');
     await whenUserPressButton(buttonDecimal, tester);
-    thenResultShouldBe('0.');
+    thenResultShouldBe('0,');
     await whenUserPressButton(buttonSeven, tester);
-    thenResultShouldBe('0.7');
+    thenResultShouldBe('0,7');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('0.74');
+    thenResultShouldBe('0,74');
   },);
 
   testWidgets('check clear(), must be 0', (WidgetTester tester) async {

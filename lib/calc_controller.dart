@@ -43,14 +43,14 @@ class CalcController {
           print('isOnPercentageCalled, isOnDecimalCalled = true, num1');
           state.value = CalcState(
             num1: state.value.num1 + input,
-            result: state.value.num1 + input,
+            result: decimalHelper(state.value.num1 + input),
           );
           return;
         } else
           print('isOnPercentageCalled, isOnDecimalCalled = false, num1');
         state.value = CalcState(
           num1: input,
-          result: input,
+          result: decimalHelper(input),
         );
         isOnPercentageCalled = false;
         return;
@@ -62,7 +62,7 @@ class CalcController {
       } else {
         final newState = CalcState(
           num1: state.value.num1 + input,
-          result: state.value.num1 + input,
+          result: decimalHelper(state.value.num1 + input),
         );
         state.value = newState;
         printInfo('onNumber');
@@ -78,7 +78,7 @@ class CalcController {
             num1: state.value.num1,
             operator: state.value.operator,
             num2: state.value.num2 + input,
-            result: state.value.num2 + input,
+            result: decimalHelper(state.value.num2 + input),
           );
           isOnPercentageCalled = false;
           return;
@@ -97,7 +97,7 @@ class CalcController {
         num1: state.value.num1,
         num2: state.value.num2 + input,
         operator: state.value.operator,
-        result: state.value.num2 + input,
+        result: decimalHelper(state.value.num2 + input),
       );
       state.value = newState;
       printInfo('onNumber');
@@ -114,7 +114,7 @@ class CalcController {
             num1: state.value.num1,
             operator: operation,
             num2: state.value.num2,
-            result: state.value.result,
+            result: decimalHelper(state.value.result),
           );
           printInfo('onOperator');
           print('onOperator: are we here?, ${state.value.operator}');
@@ -133,7 +133,7 @@ class CalcController {
             num1: state.value.num1,
             num2: state.value.num2,
             operator: operation,
-            result: state.value.result,
+            result: decimalHelper(state.value.result),
           );
         }
     }
@@ -148,7 +148,8 @@ class CalcController {
       print('onPerc, num1: ${state.value.num1}');
       state.value = CalcState(
         num1: (double.parse(state.value.num1) * 0.01).toString(),
-        result: (double.parse(state.value.num1) * 0.01).toString(),
+        result:
+        decimalHelper((double.parse(state.value.num1) * 0.01).toString()),
       );
     } else {
       print('onPerc, num2: ${state.value.num2}');
@@ -160,18 +161,18 @@ class CalcController {
                   double.parse(state.value.num2) *
               0.01)
               .toString(),
-          result: (double.parse(state.value.num1) *
+          result: decimalHelper((double.parse(state.value.num1) *
                   double.parse(state.value.num2) *
               0.01)
-              .toString(),
+              .toString()),
         );
       } else {
         state.value = CalcState(
-          num1: state.value.num1,
-          operator: state.value.operator,
-          num2: (double.parse(state.value.num2) * 0.01).toString(),
-          result: (double.parse(state.value.num2) * 0.01).toString(),
-        );
+            num1: state.value.num1,
+            operator: state.value.operator,
+            num2: (double.parse(state.value.num2) * 0.01).toString(),
+            result: decimalHelper(
+                (double.parse(state.value.num2) * 0.01).toString()));
       }
     }
     printInfo('onPercentage');
@@ -190,14 +191,15 @@ class CalcController {
           print('we had minus');
           state.value = CalcState(
             num1: state.value.num1.replaceFirst('-', ''),
-            result: state.value.num1.replaceFirst('-', ''),
+            result: decimalHelper(state.value.num1.replaceFirst('-', '')),
           );
         } else {
           print('we had plus');
           state.value = CalcState(
-            num1: '-' + state.value.num1,
-            result: '-' + state.value.num1,
-          );
+              num1: '-' + state.value.num1,
+              result: decimalHelper(
+                '-' + state.value.num1,
+              ));
         }
         printInfo('onPlusMinus');
       }
@@ -205,17 +207,19 @@ class CalcController {
       // num2
       if (state.value.num1.contains('-')) {
         state.value = CalcState(
-          num1: state.value.num1.replaceFirst('-', ''),
-          result: '-' + state.value.num1.replaceFirst('-', ''),
-        );
+            num1: state.value.num1.replaceFirst('-', ''),
+            result: decimalHelper(
+              '-' + state.value.num1.replaceFirst('-', ''),
+            ));
       } else {
         if (state.value.num2 != '') {
           state.value = CalcState(
-            num1: state.value.num1,
-            num2: '-' + state.value.num2,
-            operator: state.value.operator,
-            result: '-' + state.value.num2,
-          );
+              num1: state.value.num1,
+              num2: '-' + state.value.num2,
+              operator: state.value.operator,
+              result: decimalHelper(
+                '-' + state.value.num2,
+              ));
         }
       }
       printInfo('onPlusMinus');
@@ -244,7 +248,7 @@ class CalcController {
         state.value = CalcState(
             num1: state.value.num1 + '.',
             operator: state.value.operator,
-            result: state.value.num1 + '.');
+            result: decimalHelper(state.value.num1 + '.'));
         isOnDecimalCalled = true;
       } else {
         print('onDecmal: num2');
@@ -266,7 +270,7 @@ class CalcController {
           num1: state.value.num1,
           operator: state.value.operator,
           num2: state.value.num1,
-          result: state.value.result);
+          result: decimalHelper(state.value.result));
     }
     switch (state.value.operator) {
       case '+':
@@ -276,9 +280,9 @@ class CalcController {
                       double.parse(state.value.num2))
                   .toString(),
               operator: state.value.operator,
-              result: (double.parse(state.value.num1) +
+              result: decimalHelper((double.parse(state.value.num1) +
                       double.parse(state.value.num2))
-                  .toString());
+                  .toString()));
         }
         break;
       case '-':
@@ -288,9 +292,9 @@ class CalcController {
                       double.parse(state.value.num2))
                   .toString(),
               operator: state.value.operator,
-              result: (double.parse(state.value.num1) -
+              result: decimalHelper((double.parse(state.value.num1) -
                       double.parse(state.value.num2))
-                  .toString());
+                  .toString()));
         }
         break;
       case '*':
@@ -300,9 +304,9 @@ class CalcController {
                       double.parse(state.value.num2))
                   .toString(),
               operator: state.value.operator,
-              result: (double.parse(state.value.num1) *
+              result: decimalHelper((double.parse(state.value.num1) *
                       double.parse(state.value.num2))
-                  .toString());
+                  .toString()));
         }
         break;
       case '/':
@@ -312,9 +316,9 @@ class CalcController {
                       double.parse(state.value.num2))
                   .toString(),
               operator: state.value.operator,
-              result: (double.parse(state.value.num1) /
+              result: decimalHelper((double.parse(state.value.num1) /
                       double.parse(state.value.num2))
-                  .toString());
+                  .toString()));
         }
         break;
     }
@@ -326,9 +330,16 @@ class CalcController {
     print('*******CLEARED******');
   }
 
-  String decimalHelper(String number) {
-    print('number before is: $number');
-    final double doubleNumber = double.parse(number);
+  //TODO fails here double is invalid
+  String decimalHelper(string) {
+    print('number before is:');
+//    final newState = CalcState(
+//      num1: state.value.num1,
+//      num2: state.value.num2,
+//      operator: state.value.operator,
+//      result: state.value.num2,
+//    );
+//    final double doubleNumber = double.parse(number);
     numberFormatSymbols['zz'] = new NumberSymbols(
       NAME: "zz",
       DECIMAL_SEP: ',',
@@ -348,7 +359,7 @@ class CalcController {
       DEF_CURRENCY_CODE: 'AUD',
     );
     final f = new NumberFormat('#,###.#####', 'zz');
-    return f.format(doubleNumber);
+    return f.format(string);
 //    f.format(number);
   }
 
