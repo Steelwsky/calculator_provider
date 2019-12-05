@@ -219,7 +219,7 @@ void main() {
     await whenUserPressButton(buttonZero, tester);
     thenResultShouldBe('0');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('∞');
+    thenResultShouldBe('Infinity');
   });
 
   testWidgets('should be 7 as num1 and a result after getting INFINITY',
@@ -233,7 +233,7 @@ void main() {
     await whenUserPressButton(buttonZero, tester);
     thenResultShouldBe('0');
     await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('∞');
+    thenResultShouldBe('Infinity');
     await whenUserPressButton(buttonSeven, tester);
     thenResultShouldBe('7');
   });
@@ -249,7 +249,7 @@ void main() {
         await whenUserPressButton(buttonZero, tester);
         thenResultShouldBe('0');
         await whenUserPressButton(buttonEqual, tester);
-        thenResultShouldBe('∞');
+        thenResultShouldBe('Infinity');
         await whenUserPressButton(buttonSeven, tester);
         thenResultShouldBe('7');
         await whenUserPressButton(buttonPlus, tester);

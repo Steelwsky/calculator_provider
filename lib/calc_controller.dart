@@ -25,6 +25,7 @@ class CalcController {
   bool isOnDecimalCalled = false;
 
   //DONE somehow --- onNumber is very strange now. if(isOnPerc){... if(isOnDecimalCalled) else if(isOnDecimalCalled){}}} need to reformat
+  //TODO onNumber is still strange and huge.
   void onNumber(String input) {
     printInfo('onNumber');
     // is needed to be clear
@@ -114,7 +115,7 @@ class CalcController {
             num1: state.value.num1,
             operator: operation,
             num2: state.value.num2,
-            result: decimalHelper(state.value.result),
+            result: decimalHelper(state.value.num1),
           );
           printInfo('onOperator');
           print('onOperator: are we here?, ${state.value.operator}');
@@ -125,7 +126,7 @@ class CalcController {
         {
           //allows do this: 7 + 4 + = 22.0.
           //Second '+' calls math() for internal calculate
-          if (state.value.operator != '=' && state.value.num2 != '') {
+          if (state.value.num2 != '') {
             math();
             print('helper calc for additional operator');
           }
@@ -238,7 +239,7 @@ class CalcController {
       print(
           'onDecimal, contains DOT,  isOnPercentageCalled = $isOnPercentageCalled');
       if (isOnPercentageCalled == true) {
-        state.value = CalcState(num1: '0.', result: '0.');
+        state.value = CalcState(num1: '0.', result: '0,');
         isOnDecimalCalled = true;
       } else
         return;
@@ -248,7 +249,7 @@ class CalcController {
         state.value = CalcState(
             num1: state.value.num1 + '.',
             operator: state.value.operator,
-            result: decimalHelper(state.value.num1 + '.'));
+            result: state.value.result + ',');
         isOnDecimalCalled = true;
       } else {
         print('onDecmal: num2');
@@ -256,7 +257,7 @@ class CalcController {
           num1: state.value.num1,
           num2: '0.',
           operator: state.value.operator,
-          result: '0.',
+          result: '0,',
         );
         isOnDecimalCalled = true;
       }
@@ -270,7 +271,7 @@ class CalcController {
           num1: state.value.num1,
           operator: state.value.operator,
           num2: state.value.num1,
-          result: decimalHelper(state.value.result));
+          result: decimalHelper(state.value.num1));
     }
     switch (state.value.operator) {
       case '+':
@@ -339,7 +340,8 @@ class CalcController {
 //      operator: state.value.operator,
 //      result: state.value.num2,
 //    );
-//    final double doubleNumber = double.parse(number);
+    printInfo('decimalHelper');
+//    final double doubleNumber = double.parse(string);
     numberFormatSymbols['zz'] = new NumberSymbols(
       NAME: "zz",
       DECIMAL_SEP: ',',
@@ -350,7 +352,7 @@ class CalcController {
       MINUS_SIGN: '-',
       EXP_SYMBOL: 'e',
       PERMILL: '\u2030',
-      INFINITY: '\u221E',
+      INFINITY: 'Infinity',
       NAN: 'NaN',
       DECIMAL_PATTERN: '# ##0.###',
       SCIENTIFIC_PATTERN: '#E0',
@@ -359,7 +361,9 @@ class CalcController {
       DEF_CURRENCY_CODE: 'AUD',
     );
     final f = new NumberFormat('#,###.#####', 'zz');
-    return f.format(string);
+    final double dh = double.parse(string);
+    printInfo('decimalHelper');
+    return f.format(dh);
 //    f.format(number);
   }
 
