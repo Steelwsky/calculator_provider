@@ -3,14 +3,7 @@ import 'home_page.dart';
 import 'calc_controller.dart';
 import 'package:provider/provider.dart';
 
-//TODO enum Operator. implement in onOperator
 
-//DONE add all simple buttons (same color, without icons) but separate zero btn
-//TODO add all methods (+ decimal format)
-//TODO add tests. Test everything.
-
-//TODO what is dispose
-//TODO streams
 
 void main() => runApp(MyApp());
 
