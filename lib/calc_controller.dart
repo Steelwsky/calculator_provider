@@ -39,7 +39,7 @@ class CalcController {
     if (state.value.result == 'Infinity' ||
         (state.value.num2 == '' &&
             state.value.operator == '=' &&
-            state.value.num1 == state.value.result)) {
+            state.value.num1.replaceAll('.', ',') == state.value.result)) {
       print('clear in onNumber');
       clear();
     }
@@ -77,7 +77,7 @@ class CalcController {
         final newState = CalcState(num1: input, result: input);
         state.value = newState;
         printInfo('onNumber');
-      } else if (state.value.num1.contains('.')) {
+      } else if (state.value.result.contains(',')) {
         print('contains(.)');
         final newState = CalcState(
             num1: state.value.num1 + input,
@@ -138,6 +138,7 @@ class CalcController {
       case '=':
         {
           math();
+          //
           state.value = CalcState(
             num1: state.value.num1,
             operator: operation,
@@ -154,14 +155,16 @@ class CalcController {
           //allows do this: 7 + 4 + = 22.0.
           //Second '+' calls math() for internal calculate
           if (state.value.num2 != '') {
+            print('onOperator: default, num2 != null ');
             math();
             print('helper calc for additional operator');
           }
+          print('onOperator: default, num2 = null');
           state.value = CalcState(
             num1: state.value.num1,
             num2: state.value.num2,
             operator: operation,
-            result: decimalHelper(state.value.result),
+            result: state.value.result,
           );
         }
     }
@@ -211,7 +214,7 @@ class CalcController {
     if (state.value.result == 'Infinity' ||
         (state.value.num2 == '' &&
             state.value.operator == '=' &&
-            state.value.num1 == state.value.result)) {
+            state.value.num1.replaceAll('.', ',') == state.value.result)) {
       print('clear in onDecimal');
       clear();
     }
