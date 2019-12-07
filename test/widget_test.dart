@@ -454,6 +454,118 @@ void main() {
     thenResultShouldBe('0,4');
   },);
 
+  testWidgets('testing onDecimal 9: user press 4, DOT, 0, 0 , + DOT, 0 , 7 = button => should be 4,07', (
+      WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonDecimal, tester);
+    thenResultShouldBe('4,');
+    await whenUserPressButton(buttonZero, tester);
+    thenResultShouldBe('4,0');
+    await whenUserPressButton(buttonZero, tester);
+    thenResultShouldBe('4,00');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('4,00');
+    await whenUserPressButton(buttonDecimal, tester);
+    thenResultShouldBe('0,');
+    await whenUserPressButton(buttonZero, tester);
+    thenResultShouldBe('0,0');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('0,07');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('4,07');
+
+  },);
+
+  testWidgets('testing onDecimal 10: user press 4, 0, 0, 0, DOT, 0, 0 , + DOT, 0 , 7 = button => should be 4 000,07', (
+      WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonZero, tester);
+    thenResultShouldBe('40');
+    await whenUserPressButton(buttonZero, tester);
+    thenResultShouldBe('400');
+    await whenUserPressButton(buttonZero, tester);
+    thenResultShouldBe('4\u00A0000');
+    await whenUserPressButton(buttonDecimal, tester);
+    thenResultShouldBe('4\u00A0000,');
+    await whenUserPressButton(buttonZero, tester);
+    thenResultShouldBe('4\u00A0000,0');
+    await whenUserPressButton(buttonZero, tester);
+    thenResultShouldBe('4\u00A0000,00');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('4\u00A0000,00');
+    await whenUserPressButton(buttonDecimal, tester);
+    thenResultShouldBe('0,');
+    await whenUserPressButton(buttonZero, tester);
+    thenResultShouldBe('0,0');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('0,07');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('4\u00A0000,07');
+  },);
+
+  testWidgets('testing onDecimal 11: user press  DOT, 4, 0 , + 4, 0, 0, 0  = button => should be 4 000,4', (
+      WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonDecimal, tester);
+    thenResultShouldBe('0,');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('0,4');
+    await whenUserPressButton(buttonZero, tester);
+    thenResultShouldBe('0,40');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('0,40');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonZero, tester);
+    thenResultShouldBe('40');
+    await whenUserPressButton(buttonZero, tester);
+    thenResultShouldBe('400');
+    await whenUserPressButton(buttonZero, tester);
+    thenResultShouldBe('4\u00A0000');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('4\u00A0000,4');
+  },);
+
+  testWidgets('testing onDecimal 11: user press 4, + 7, DOT, 4  = button => should be 11,4', (
+      WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('7');
+    await whenUserPressButton(buttonDecimal, tester);
+    thenResultShouldBe('7,');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('7,4');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('11,4');
+  },);
+
+  testWidgets('testing onDecimal 12: user press 4, + 7, DOT,  = button => should be 11', (
+      WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('7');
+    await whenUserPressButton(buttonDecimal, tester);
+    thenResultShouldBe('7,');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('11');
+  },);
 
   testWidgets(
     'testing onPlusMinus 1: should be 0 when user press +- after app is pumped', (WidgetTester tester) async {
@@ -741,10 +853,10 @@ void main() {
     thenResultShouldBe('0,7');
     await whenUserPressButton(buttonPlus, tester);
     thenResultShouldBe('4,7');
-    await whenUserPressButton(buttonSeven, tester);
-    thenResultShouldBe('7');
-    await whenUserPressButton(buttonEqual, tester);
-    thenResultShouldBe('11,7');
+//    await whenUserPressButton(buttonSeven, tester);
+//    thenResultShouldBe('7');
+//    await whenUserPressButton(buttonEqual, tester);
+//    thenResultShouldBe('11,7');
   },);
 
 
@@ -779,10 +891,10 @@ void main() {
     thenResultShouldBe('0,7');
     await whenUserPressButton(buttonFour, tester);
     thenResultShouldBe('4');
-//    await whenUserPressButton(buttonPercentage, tester);
-//    thenResultShouldBe('0,028');
-//    await whenUserPressButton(buttonEqual, tester);
-//    thenResultShouldBe('0,728');
+    await whenUserPressButton(buttonPercentage, tester);
+    thenResultShouldBe('0,028');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('0,728');
   },);
 
   testWidgets('testing onPercentage 14:  DOTBUTTON, 7 + 4, % = button => should be 7.28 ', (
@@ -821,6 +933,23 @@ void main() {
     thenResultShouldBe('0,74');
   },);
 
+  testWidgets('testing onPercentage 16: user press 0.47 + 4 = 4.47', (WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonDecimal, tester);
+    thenResultShouldBe('0,');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('0,4');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('0,47');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('0,47');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonEqual, tester);
+    thenResultShouldBe('4,47');
+  },);
+
   testWidgets('check clear(), must be 0', (WidgetTester tester) async {
     await pumpGivenApp(tester);
     thenResultShouldBe('0');
@@ -829,6 +958,7 @@ void main() {
     await whenUserPressButton(buttonClear, tester);
     thenResultShouldBe('0');
   });
+
 }
 
 Future<void> pumpGivenApp(WidgetTester tester) async {

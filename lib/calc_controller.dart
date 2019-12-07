@@ -45,15 +45,6 @@ class CalcController {
     }
     // FIRSTNUMBER
     if (state.value.operator == null) {
-//      if (isOnPercentageCalled) {
-//        print('isOnPercentageCalled, isOnDecimalCalled = true, num1');
-//        state.value = CalcState(
-//          num1: input,
-//          result: input,
-//        );
-//        isOnPercentageCalled = false;
-//        return;
-//      }
       if (isOnPercentageCalled) {
         print('isOnPercentageCalled, num1');
         if (isOnDecimalCalled) {
@@ -78,10 +69,9 @@ class CalcController {
         state.value = newState;
         printInfo('onNumber');
       } else if (state.value.result.contains(',')) {
-        print('contains(.)');
+        print('contains(,)');
         final newState = CalcState(
-            num1: state.value.num1 + input,
-            result: state.value.num1.replaceAll('.', ',') + input);
+            num1: state.value.num1 + input, result: state.value.result + input);
         state.value = newState;
         printInfo('onNumber contains dot');
       } else {
@@ -119,14 +109,26 @@ class CalcController {
         isOnPercentageCalled = false;
         return;
       }
-      final newState = CalcState(
-        num1: state.value.num1,
-        num2: state.value.num2 + input,
-        operator: state.value.operator,
-        result: decimalHelper(state.value.num2 + input),
-      );
-      state.value = newState;
-      printInfo('onNumber');
+      if (state.value.result.contains(',')) {
+        print('contains(.)');
+        final newState = CalcState(
+          num1: state.value.num1,
+          num2: state.value.num2 + input,
+          operator: state.value.operator,
+          result: state.value.num2.replaceAll('.', ',') + input,
+        );
+        state.value = newState;
+        printInfo('onNumber contains dot');
+      } else {
+        final newState = CalcState(
+          num1: state.value.num1,
+          num2: state.value.num2 + input,
+          operator: state.value.operator,
+          result: decimalHelper(state.value.num2 + input),
+        );
+        state.value = newState;
+        printInfo('onNumber');
+      }
     }
   }
 
@@ -181,7 +183,7 @@ class CalcController {
       state.value = CalcState(
         num1: (double.parse(state.value.num1) * 0.01).toString(),
         result:
-        decimalHelper((double.parse(state.value.num1) * 0.01).toString()),
+            decimalHelper((double.parse(state.value.num1) * 0.01).toString()),
       );
     } else {
       print('onPerc, num2: ${state.value.num2}');
@@ -191,11 +193,11 @@ class CalcController {
           operator: state.value.operator,
           num2: (double.parse(state.value.num1) *
                   double.parse(state.value.num2) *
-              0.01)
+                  0.01)
               .toString(),
           result: decimalHelper((double.parse(state.value.num1) *
                   double.parse(state.value.num2) *
-              0.01)
+                  0.01)
               .toString()),
         );
       } else {
@@ -210,6 +212,7 @@ class CalcController {
     printInfo('onPercentage');
   }
 
+  //TODO onDecimal has unvcovered cases.
   void onDecimal() {
     if (state.value.result == 'Infinity' ||
         (state.value.num2 == '' &&
@@ -218,34 +221,55 @@ class CalcController {
       print('clear in onDecimal');
       clear();
     }
-    if (state.value.num1.contains('.') && state.value.operator == null) {
-      print(
-          'onDecimal, contains DOT,  isOnPercentageCalled = $isOnPercentageCalled');
-      //esli 5% a potom najat 5, to budet 5.
+    isOnDecimalCalled = true;
+    print('onDecimal init, isOnPercentageCalled = $isOnPercentageCalled');
       if (isOnPercentageCalled) {
-        state.value = CalcState(num1: '0.', result: '0,');
-        isOnDecimalCalled = true;
-        return;
-      }
-    } else {
-      if (state.value.operator == null) {
-        print('onDecmal: num1');
-        state.value = CalcState(
-            num1: state.value.num1 + '.',
-            operator: state.value.operator,
-            result: state.value.result + ',');
-        isOnDecimalCalled = true;
+        print('isOnPercentageCalled');
+        if (state.value.operator == null) {
+          print(
+              'onDecimal, contains DOT,  isOnPercentageCalled = $isOnPercentageCalled');
+          //esli 5% a potom najat 5, to budet 5.
+          state.value = CalcState(num1: '0.', result: '0,');
+          return;
+        } else {
+          state.value = CalcState(num1: state.value.num1, operator: state.value.operator, num2: '0.', result: '0,');
+          return;
+        }
       } else {
-        print('onDecmal: num2');
-        state.value = CalcState(
-          num1: state.value.num1,
-          num2: '0.',
-          operator: state.value.operator,
-          result: '0,',
-        );
-        isOnDecimalCalled = true;
+        if (state.value.operator == null) {
+          if(state.value.num1.contains('.')) {
+           return;
+          } else {
+            print('onDecmal: num1');
+            state.value = CalcState(
+                num1: state.value.num1 + '.',
+                operator: state.value.operator,
+                result: state.value.result + ',');
+          }
+        } else {
+          if (state.value.num2 == '') {
+            if(state.value.num2.contains('.')) {
+             return;
+            } else {
+              print('onDecmal: num2 = empty ');
+              state.value = CalcState(
+                num1: state.value.num1,
+                num2: '0.',
+                operator: state.value.operator,
+                result: '0,',
+              );
+            }
+          } else {
+            print('onDecmal: num2 = not empty ');
+            state.value = CalcState(
+              num1: state.value.num1,
+              num2: state.value.num2 + '.',
+              operator: state.value.operator,
+              result: state.value.num2 + ',',
+            );
+          }
+        }
       }
-    }
   }
 
   // onPlusMinus() doesn't have case which allows to +- after app is pimped and have -0
@@ -355,7 +379,7 @@ class CalcController {
         }
         break;
     }
-    isOnDecimalCalled = false;
+//    isOnDecimalCalled = false;
   }
 
   void clear() {
@@ -381,7 +405,7 @@ class CalcController {
       PERMILL: '\u2030',
       INFINITY: 'Infinity',
       NAN: 'NaN',
-      DECIMAL_PATTERN: '# ##0.###',
+      DECIMAL_PATTERN: '# ##0,###',
       SCIENTIFIC_PATTERN: '#E0',
       PERCENT_PATTERN: '#,##0%',
       CURRENCY_PATTERN: '\u00A4#,##0.00',
