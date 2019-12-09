@@ -3,8 +3,6 @@ import 'home_page.dart';
 import 'calc_controller.dart';
 import 'package:provider/provider.dart';
 
-
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {

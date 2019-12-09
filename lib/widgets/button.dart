@@ -8,25 +8,20 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-//    final CalcController calcController = Provider.of<CalcController>(context);
-    //              newState.isFirst ? '${newState.num1}': '${newState.num2}',
-    bool isZero = false;
-    if (str == '0') {
-      isZero = true;
-    }
-//    print('str : $str, isZero: $isZero');
     return Container(
         margin: const EdgeInsets.all(4.0),
         child: RawMaterialButton(
-          constraints: isZero == true
-              ? BoxConstraints.tight(Size(152.0, 72.0))
-              : BoxConstraints.tight(Size(72.0, 72.0)),
+          constraints: str == '0'
+              ? BoxConstraints.tight(Size(152.0, 74.0))
+              : BoxConstraints.tight(Size(74.0, 74.0)),
           key: ValueKey('button$str'),
           onPressed: () {
-            (str == 'AC' || str == '.' || str == '+-' || str == '%') ? func() : func(str);
+            (str == 'AC' || str == '.' || str == '+-' || str == '%')
+                ? func()
+                : func(str);
           },
           child: new Text(
-            '$str',
+            str == '.' ? ',' : '$str',
             style: TextStyle(
                 fontSize: 30, color: Colors.white, fontWeight: FontWeight.w500),
           ),
@@ -34,7 +29,7 @@ class MyButton extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(36.0)),
           elevation: 2.0,
           fillColor: Colors.indigo,
-          padding: isZero == true
+          padding: str == '0'
               ? const EdgeInsets.only(right: 84)
               : const EdgeInsets.all(0.0),
         ));

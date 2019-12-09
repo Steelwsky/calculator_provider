@@ -14,9 +14,7 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Flexible(
-              child: TextView(),
-            ),
+            TextView(),
             Row(
               children: <Widget>[
                 MyButton(str: 'AC', func: calcController.clear),
@@ -65,7 +63,7 @@ class MyHomePage extends StatelessWidget {
               ],
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-            )
+            ),
           ],
         ),
       ),

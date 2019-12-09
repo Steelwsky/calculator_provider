@@ -10,6 +10,8 @@ import 'package:intl/number_symbols.dart';
 //TODO what is dispose
 //TODO streams
 
+//TODO maxlength of num1, num2, result <= 9.
+
 class CalcState {
   CalcState({
     this.num1 = '0',
@@ -39,7 +41,9 @@ class CalcController {
     if (state.value.result == 'Infinity' ||
         (state.value.num2 == '' &&
             state.value.operator == '=' &&
-            state.value.num1.replaceAll('.', ',') == state.value.result)) {
+            decimalHelper(state.value.num1) == state.value.result)
+//            state.value.num1.replaceAll('.', ',') == state.value.result)
+    ) {
       print('clear in onNumber');
       clear();
     }
@@ -217,7 +221,7 @@ class CalcController {
     if (state.value.result == 'Infinity' ||
         (state.value.num2 == '' &&
             state.value.operator == '=' &&
-            state.value.num1.replaceAll('.', ',') == state.value.result)) {
+            decimalHelper(state.value.num1) == state.value.result)) {
       print('clear in onDecimal');
       clear();
     }
