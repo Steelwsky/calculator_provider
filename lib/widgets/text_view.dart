@@ -12,11 +12,11 @@ class TextView extends StatelessWidget {
         valueListenable: calcController.state,
         builder: (_, newState, __) {
           return ConstrainedBox(
-            constraints: BoxConstraints.tight(Size(400, 200)),
+            constraints: BoxConstraints.tight(Size(400, 170)),
             child: Container(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.bottomRight,
               padding: EdgeInsets.only(
-                  top: 120, right: 44, bottom: 12, left: 44),
+                  top: 10, right: 44, bottom: 18, left: 44),
               child: SizedBox(
                 child: AutoSizeText(
                   '${newState.result}',
