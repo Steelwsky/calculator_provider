@@ -114,7 +114,7 @@ class CalcController {
         return;
       }
       if (state.value.result.contains(',')) {
-        print('contains(.)');
+        print('contains(,)');
         final newState = CalcState(
           num1: state.value.num1,
           num2: state.value.num2 + input,

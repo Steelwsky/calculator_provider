@@ -15,8 +15,8 @@ class MyButton extends StatelessWidget {
         margin: const EdgeInsets.all(4.0),
         child: RawMaterialButton(
           constraints: str == '0'
-              ? BoxConstraints.tight(Size(152.0, 74.0))
-              : BoxConstraints.tight(Size(74.0, 74.0)),
+              ? BoxConstraints.tight(Size(160.0, 78.0))
+              : BoxConstraints.tight(Size(78.0, 78.0)),
           key: ValueKey('button$str'),
           onPressed: () {
             (str == 'AC' || str == '.' || str == '+-' || str == '%')
