@@ -1,10 +1,13 @@
+
 import 'package:flutter/material.dart';
+import 'package:provider_calc_expanded/settings/button_settings.dart';
 
 class MyButton extends StatelessWidget {
   final String str;
   final Function func;
+  final ButtonSettings buttonSettings;
 
-  MyButton({this.str, this.func});
+  MyButton({this.str, this.func, this.buttonSettings});
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +26,14 @@ class MyButton extends StatelessWidget {
           child: new Text(
             str == '.' ? ',' : '$str',
             style: TextStyle(
-                fontSize: 30, color: Colors.white, fontWeight: FontWeight.w500),
+                fontSize: 30,
+                color: buttonSettings.fontColor,
+                fontWeight: FontWeight.w500),
           ),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(36.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
           elevation: 2.0,
-          fillColor: Colors.indigo,
+          fillColor: buttonSettings.backgroundColor,
           padding: str == '0'
               ? const EdgeInsets.only(right: 84)
               : const EdgeInsets.all(0.0),
