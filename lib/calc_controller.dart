@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:intl/number_symbols_data.dart';
 import 'package:intl/number_symbols.dart';
 
-
 class CalcState {
   CalcState({
     this.num1 = '0',
@@ -25,15 +24,13 @@ class CalcController {
   bool isOnPercentageCalled = false;
   bool isOnDecimalCalled = false;
 
-
   void onNumber(String input) {
     printInfo('onNumber');
     // is needed to be clear
     if (state.value.result == 'Infinity' ||
         (state.value.num2 == '' &&
             state.value.operator == '=' &&
-            decimalHelper(state.value.num1) == state.value.result)
-    ) {
+            decimalHelper(state.value.num1) == state.value.result)) {
       print('clear in onNumber');
       clear();
     }
@@ -214,44 +211,54 @@ class CalcController {
       print('clear in onDecimal');
       clear();
     }
-    isOnDecimalCalled = true;
+
     print('onDecimal init, isOnPercentageCalled = $isOnPercentageCalled');
-      if (isOnPercentageCalled) {
-        print('isOnPercentageCalled');
-        if (state.value.operator == null) {
-          print(
-              'onDecimal, contains DOT,  isOnPercentageCalled = $isOnPercentageCalled');
-          //esli 5% a potom najat 5, to budet 5.
-          state.value = CalcState(num1: '0.', result: '0,');
+    if (isOnPercentageCalled) {
+      print('isOnPercentageCalled');
+      if (state.value.operator == null) {
+        print(
+            'onDecimal, contains DOT,  isOnPercentageCalled = $isOnPercentageCalled');
+        state.value = CalcState(num1: '0.', result: '0,');
+        isOnDecimalCalled = true;
+        return;
+      } else {
+        state.value = CalcState(
+            num1: state.value.num1,
+            operator: state.value.operator,
+            num2: '0.',
+            result: '0,');
+        isOnDecimalCalled = true;
+        return;
+      }
+    } else {
+      if (state.value.operator == null) {
+        if (state.value.num1.contains('.')) {
           return;
         } else {
-          state.value = CalcState(num1: state.value.num1, operator: state.value.operator, num2: '0.', result: '0,');
-          return;
+          print('onDecmal: num1');
+          state.value = CalcState(
+              num1: state.value.num1 + '.',
+              operator: state.value.operator,
+              result: state.value.result + ',');
+          isOnDecimalCalled = true;
         }
       } else {
-        if (state.value.operator == null) {
-          if(state.value.num1.contains('.')) {
-           return;
+        if (state.value.num2 == '') {
+          if (state.value.num2.contains('.')) {
+            return;
           } else {
-            print('onDecmal: num1');
+            print('onDecmal: num2 = empty ');
             state.value = CalcState(
-                num1: state.value.num1 + '.',
-                operator: state.value.operator,
-                result: state.value.result + ',');
+              num1: state.value.num1,
+              num2: '0.',
+              operator: state.value.operator,
+              result: '0,',
+            );
+            isOnDecimalCalled = true;
           }
         } else {
-          if (state.value.num2 == '') {
-            if(state.value.num2.contains('.')) {
-             return;
-            } else {
-              print('onDecmal: num2 = empty ');
-              state.value = CalcState(
-                num1: state.value.num1,
-                num2: '0.',
-                operator: state.value.operator,
-                result: '0,',
-              );
-            }
+          if (state.value.num2.contains('.')) {
+            return;
           } else {
             print('onDecmal: num2 = not empty ');
             state.value = CalcState(
@@ -263,16 +270,14 @@ class CalcController {
           }
         }
       }
+    }
   }
 
-  // onPlusMinus() doesn't have case which allows to +- after app is pimped and have -0
   void onPlusMinus() {
     if (state.value.operator == null) {
       // num1
       if (state.value.num1 == '0') {
         return;
-//        state.value = CalcState(num1: '-0', result: '-0');
-//        printInfo();
       } else {
         if (state.value.num1.contains('-')) {
           print('we had minus');
@@ -372,7 +377,6 @@ class CalcController {
         }
         break;
     }
-//    isOnDecimalCalled = false;
   }
 
   void clear() {
@@ -385,7 +389,6 @@ class CalcController {
   //TODO fails here double is invalid
   String decimalHelper(string) {
     printInfo('decimalHelper');
-//    final double doubleNumber = double.parse(string);
     numberFormatSymbols['zz'] = new NumberSymbols(
       NAME: "zz",
       DECIMAL_SEP: ',',
@@ -407,7 +410,6 @@ class CalcController {
     final f = new NumberFormat('#,###.#####', 'zz');
     final double dh = double.parse(string);
     return f.format(dh);
-//    f.format(number);
   }
 
   void printInfo(String string) {

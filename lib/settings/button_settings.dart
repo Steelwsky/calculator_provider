@@ -33,15 +33,3 @@ class ButtonSettings {
     return _buttons;
   }
 }
-
-//  static List<ButtonSettings> _buttons = [
-//    ButtonSettings(
-//        fontColor: _mapColorsFonts['white'],
-//        backgroundColor: _mapBackground['darkGrey']),
-//    ButtonSettings(
-//        fontColor: _mapColorsFonts['black'],
-//        backgroundColor: _mapBackground['lightGrey']),
-//    ButtonSettings(
-//        fontColor: _mapColorsFonts['white'],
-//        backgroundColor: _mapBackground['orange']),
-//  ];

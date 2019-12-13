@@ -568,6 +568,26 @@ void main() {
   },);
 
   testWidgets(
+    'testing onDecimal 13: user press 4, + 7, DOT, 4, DOT = button => should be 7,4', (
+      WidgetTester tester) async {
+    await pumpGivenApp(tester);
+    thenResultShouldBe('0');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonPlus, tester);
+    thenResultShouldBe('4');
+    await whenUserPressButton(buttonSeven, tester);
+    thenResultShouldBe('7');
+    await whenUserPressButton(buttonDecimal, tester);
+    thenResultShouldBe('7,');
+    await whenUserPressButton(buttonFour, tester);
+    thenResultShouldBe('7,4');
+    await whenUserPressButton(buttonDecimal, tester);
+    thenResultShouldBe('7,4');
+  },);
+
+
+  testWidgets(
     'testing onPlusMinus 1: should be 0 when user press +- after app is pumped', (WidgetTester tester) async {
     await pumpGivenApp(tester);
     thenResultShouldBe('0');
