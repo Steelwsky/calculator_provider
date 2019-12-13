@@ -24,9 +24,11 @@ class MyButton extends StatelessWidget {
                 : func(str);
           },
           child: new Text(
-            str == '.' ? ',' : '$str',
+            str == '.' ? ',' : str == '-' ? '\u2014' : str == '*'
+                ? '\u00D7'
+                : '$str',
             style: TextStyle(
-                fontSize: 30,
+                fontSize: str == '*' || str == '+' || str == '=' ? 40 : 35,
                 color: buttonSettings.fontColor,
                 fontWeight: FontWeight.w500),
           ),

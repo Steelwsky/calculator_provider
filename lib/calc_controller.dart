@@ -3,14 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:intl/number_symbols_data.dart';
 import 'package:intl/number_symbols.dart';
 
-//TODO enum Operator. implement in onOperator
-//DONE --- add all simple buttons (same color, without icons) but separate zero btn
-//DONE --- add all methods (+ decimal format)
-//kind of DONE --- add tests. Test everything.
-//TODO what is dispose
-//TODO streams
-
-//TODO maxlength of num1, num2, result <= 9.
 
 class CalcState {
   CalcState({
@@ -33,8 +25,7 @@ class CalcController {
   bool isOnPercentageCalled = false;
   bool isOnDecimalCalled = false;
 
-  //DONE somehow --- onNumber is very strange now. if(isOnPerc){... if(isOnDecimalCalled) else if(isOnDecimalCalled){}}} need to reformat
-  //TODO onNumber is still strange and huge.
+
   void onNumber(String input) {
     printInfo('onNumber');
     // is needed to be clear
@@ -42,7 +33,6 @@ class CalcController {
         (state.value.num2 == '' &&
             state.value.operator == '=' &&
             decimalHelper(state.value.num1) == state.value.result)
-//            state.value.num1.replaceAll('.', ',') == state.value.result)
     ) {
       print('clear in onNumber');
       clear();
@@ -137,7 +127,6 @@ class CalcController {
   }
 
   void onOperator(String operation) {
-    // DONE i think it can be much smaller. REDO THIS METHOD
     isOnDecimalCalled = false;
     isOnPercentageCalled = false;
     switch (operation) {
