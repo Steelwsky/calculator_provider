@@ -130,7 +130,6 @@ class CalcController {
       case '=':
         {
           math();
-          //
           state.value = CalcState(
             num1: state.value.num1,
             operator: operation,
@@ -166,7 +165,6 @@ class CalcController {
   }
 
   void onPercentage() {
-//    isOnDecimalCalled = true;
     isOnPercentageCalled = true;
     if (state.value.operator == null) {
       print('onPerc, num1: ${state.value.num1}');
@@ -202,7 +200,7 @@ class CalcController {
     printInfo('onPercentage');
   }
 
-  //TODO onDecimal has unvcovered cases.
+
   void onDecimal() {
     if (state.value.result == 'Infinity' ||
         (state.value.num2 == '' &&
@@ -211,7 +209,6 @@ class CalcController {
       print('clear in onDecimal');
       clear();
     }
-
     print('onDecimal init, isOnPercentageCalled = $isOnPercentageCalled');
     if (isOnPercentageCalled) {
       print('isOnPercentageCalled');
@@ -267,6 +264,7 @@ class CalcController {
               operator: state.value.operator,
               result: state.value.num2 + ',',
             );
+            isOnDecimalCalled = true;
           }
         }
       }
@@ -386,7 +384,7 @@ class CalcController {
     isOnDecimalCalled = false;
   }
 
-  //TODO fails here double is invalid
+
   String decimalHelper(string) {
     printInfo('decimalHelper');
     numberFormatSymbols['zz'] = new NumberSymbols(

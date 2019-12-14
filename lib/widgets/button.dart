@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider_calc_expanded/settings/button_settings.dart';
 
@@ -24,16 +23,14 @@ class MyButton extends StatelessWidget {
                 : func(str);
           },
           child: new Text(
-            str == '.' ? ',' : str == '-' ? '\u2014' : str == '*'
-                ? '\u00D7'
-                : '$str',
+            str == '.' ? ',' : str == '-' ? '\u2014' : str == '*' ? '\u00D7' : '$str',
             style: TextStyle(
                 fontSize: str == '*' || str == '+' || str == '=' ? 40 : 35,
                 color: buttonSettings.fontColor,
                 fontWeight: FontWeight.w500),
           ),
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
           elevation: 2.0,
           fillColor: buttonSettings.backgroundColor,
           padding: str == '0'
